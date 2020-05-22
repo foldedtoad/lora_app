@@ -36,12 +36,12 @@ int lora_app_init(void)
         return -1;
     }
 
-    config.frequency = 915000000;    // FIXME make this a parameter.
+    config.frequency = 904300000; // FIXME make this a parameter.
     config.bandwidth = BW_125_KHZ;
-    config.datarate = SF_10;
+    config.datarate = SF_7;
     config.preamble_len = 8;
     config.coding_rate = CR_4_5;
-    config.tx_power = 4;
+    config.tx_power = 21;
     config.tx = true;
 
     ret = lora_config(lora_dev, &config);
