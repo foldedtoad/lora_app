@@ -14,12 +14,12 @@
 LOG_MODULE_REGISTER(buttons, 3);
 
 /*---------------------------------------------------------------------------*/
-/*                                                                           */
+/* NOTE: Pin P0.13 is used by the LoRa Shield, so defeat its use as button.  */
 /*---------------------------------------------------------------------------*/
 
 #define SW_GPIO_NAME    DT_GPIO_KEYS_SW0_GPIOS_CONTROLLER
 
-#define SW0_PIN         DT_ALIAS_SW0_GPIOS_PIN
+//#define SW0_PIN         DT_ALIAS_SW0_GPIOS_PIN   // Pin P0.13 on PCA10040 BOARD
 #define SW1_PIN         DT_ALIAS_SW1_GPIOS_PIN
 #define SW2_PIN         DT_ALIAS_SW2_GPIOS_PIN
 #define SW3_PIN         DT_ALIAS_SW3_GPIOS_PIN
@@ -36,7 +36,7 @@ typedef struct {
 } button_info_t; 
 
 static const button_info_t button_info [] = {
-    { .id = BTN1_ID, .pin = SW0_PIN, .bit = BIT(SW0_PIN), .name = "BTN1" },
+//    { .id = BTN1_ID, .pin = SW0_PIN, .bit = BIT(SW0_PIN), .name = "BTN1" },
     { .id = BTN2_ID, .pin = SW1_PIN, .bit = BIT(SW1_PIN), .name = "BTN2" },
     { .id = BTN3_ID, .pin = SW2_PIN, .bit = BIT(SW2_PIN), .name = "BTN3" },
     { .id = BTN4_ID, .pin = SW3_PIN, .bit = BIT(SW3_PIN), .name = "BTN4" },
@@ -50,7 +50,7 @@ static const button_info_t unknown = {.id=INVALID_ID, .pin=0 , .bit= 0, .name= "
 /*---------------------------------------------------------------------------*/
 static struct device * gpiob;
 
-static struct gpio_callback buttons_cb;
+//static struct gpio_callback buttons_cb;
 
 typedef struct {
     struct k_work      work;
@@ -129,6 +129,7 @@ void buttons_init(void)
 
     k_work_init(&buttons.work, buttons_worker);
 
+#if 0
     gpio_pin_configure(gpiob, SW0_PIN, GPIO_INPUT | DT_ALIAS_SW0_GPIOS_FLAGS);
     gpio_pin_configure(gpiob, SW1_PIN, GPIO_INPUT | DT_ALIAS_SW1_GPIOS_FLAGS);
     gpio_pin_configure(gpiob, SW2_PIN, GPIO_INPUT | DT_ALIAS_SW2_GPIOS_FLAGS);
@@ -143,5 +144,6 @@ void buttons_init(void)
                        BIT(SW0_PIN) | BIT(SW1_PIN) | BIT(SW2_PIN) | BIT(SW3_PIN));
 
     gpio_add_callback(gpiob, &buttons_cb);
+#endif
 
 }
