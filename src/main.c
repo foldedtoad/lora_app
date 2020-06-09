@@ -36,7 +36,7 @@ K_THREAD_DEFINE(bluetooth_id, STACKSIZE, bluetooth_thread,
 #ifdef CONFIG_LORA
 #include "lora_app.h"
 
-#if 1
+#ifdef LORA_APP_TX_MODE
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
 /*---------------------------------------------------------------------------*/
@@ -53,7 +53,7 @@ K_THREAD_DEFINE(lora_send_id, STACKSIZE, lora_send_thread,
                 NULL, NULL, NULL, PRIORITY, 0, K_NO_WAIT);
 #endif
 
-#if 0
+#ifndef LORA_APP_TX_MODE
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
 /*---------------------------------------------------------------------------*/

@@ -96,7 +96,12 @@ int lora_app_init(void)
     config.preamble_len = 8;
     config.coding_rate = CR_4_5;
     config.tx_power = 14;
-    config.tx = true;               // true for TX, false for RX
+#endif
+
+#ifdef LORA_APP_TX_MODE
+    config.tx = true;
+#else
+    config.tx = false;
 #endif
 
     LOG_INF("%s mode ---------",   (config.tx) ? "TX" : "RX");
@@ -135,8 +140,8 @@ void lora_app_receive( void )
             return;
         }
 
-        LOG_INF("Received data: %s (RSSI:%ddBm, SNR:%ddBm)",
-                 receive_data, rssi, snr);
+        //LOG_INF("Received(RSSI:%ddBm, SNR:%ddBm)", rssi, snr);
+        LOG_HEXDUMP_INF(&receive_data[4], receive_data[1], "Received data");
     }
 }
 
