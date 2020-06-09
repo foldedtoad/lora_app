@@ -4,9 +4,6 @@
 #include <zephyr.h>
 #include <sys/printk.h>
 
-#include "buttons.h"
-#include "event.h"
-
 #include <logging/log.h>
 LOG_MODULE_REGISTER(main, 3);
 
@@ -81,9 +78,6 @@ K_THREAD_DEFINE(lora_receive_id, STACKSIZE, lora_receive_thread,
 void main_thread(void * id, void * unused1, void * unused2)
 {
     LOG_INF("%s", __func__);
-
-    buttons_init();
-    event_init();
 
     k_sleep( K_MSEC(500));
 
