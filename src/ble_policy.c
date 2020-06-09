@@ -11,8 +11,6 @@
 
 #include "ble_policy.h"
 #include "ble_base.h"
-#include "event.h"
-#include "buttons_id.h"
 
 #define LOG_LEVEL 3
 #include <logging/log.h>
@@ -213,25 +211,6 @@ static int ble_queue_init(void)
     k_thread_start(&ble_queue_thread);
 
     return status;
-}
-
-/*---------------------------------------------------------------------------*/
-/*                                                                           */
-/*---------------------------------------------------------------------------*/
-void ble_button_event(buttons_id_t id)
-{
-    //LOG_INF("%s: button %d", __func__, id);
-
-    switch (id) {
-
-        case BTN1_ID:
-            paste_notify(0x01, 0x02);
-            break;
-
-        default:
-            LOG_INF("%s: unknown: %d", __func__, id);
-            break;
-    }
 }
 
 /*---------------------------------------------------------------------------*/

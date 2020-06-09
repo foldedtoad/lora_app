@@ -4,8 +4,6 @@
 #ifndef __BLE_POLICY_H__
 #define __BLE_POLICY_H__
 
-#include "buttons.h"
-
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
 /*---------------------------------------------------------------------------*/
@@ -39,7 +37,6 @@ extern char DeviceId [MAX_DEVICEID_STRING_LEN];
 /*---------------------------------------------------------------------------*/
 int  ble_enqueue_msg(ble_event_t charact, u32_t data);
 void ble_operation_complete(ble_event_t charact, u32_t code);
-void ble_button_event(buttons_id_t id);
 int  ble_policy_init(void);
 void ble_device_name(void);
 
