@@ -22,6 +22,8 @@ Currently the code can be run in either send-mode (TX) or receive-mode (RX). In 
 you will find the build-time parameter to select for TX or RX mode.  Note that TX and RX are mutually exclusive
 modes of operation.
 
+There is an example of the configure and build in the "docs" directory.
+
 ## Runtime Output
 In general the transmission and reception of packets occurs about every 5 seconds.  
 Below is an example of the TX output via the Zephyr's Log facility.
@@ -80,5 +82,5 @@ The sending host was a RaspberryPi running RadioHead for the RF95 (rf95_client).
 ```
 
 ## SPI Logic Analyzer Traces
-In the docs directory there are two logic analyzer trace: a TX trace and a RX trace.
+In the "docs" directory there are two logic analyzer trace: a TX trace and a RX trace.
 You can use the Saleae software to view these traces without their hardware.  
