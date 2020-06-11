@@ -23,6 +23,7 @@ you will find the build-time parameter to select for TX or RX mode.  Note that T
 modes of operation.
 
 ## Runtime Output
+In general the transmission and reception of packets occurs about every 5 seconds.  
 Below is an example of the TX output via the Zephyr's Log facility.
 
 ```
@@ -48,10 +49,8 @@ Below is an example of the TX output via the Zephyr's Log facility.
 [00:00:57.184,417] <inf> lora_app: Data sent!
 [00:01:02.186,462] <inf> lora_app: Data sent!
 ```
-
 Below is an example of the RX output via the Zephyr's Log facility.  
-The sending host was a RaspberryPi running RadioHead for the RF95 (rf95_client)
-
+The sending host was a RaspberryPi running RadioHead for the RF95 (rf95_client).
 ```
 [00:00:00.221,588] <inf> sx1276: SX1276 Version:12 found
 *** Booting Zephyr OS build zephyr-v2.2.0-294-g8b14807e5540  ***
@@ -80,3 +79,6 @@ The sending host was a RaspberryPi running RadioHead for the RF95 (rf95_client)
 [00:00:21.148,620] <inf> lora_app: Receive posted...
 ```
 
+## SPI Logic Analyzer Traces
+In the docs directory there are two logic analyzer trace: a TX trace and a RX trace.
+You can use the Saleae software to view these traces without their hardware.  
