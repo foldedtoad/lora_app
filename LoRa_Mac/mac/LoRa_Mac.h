@@ -129,7 +129,7 @@ extern "C"
 #include <stdint.h>
 #include <stdbool.h>
 #include "utilities.h"
-#include "timer.h"
+#include "os_timer.h"
 #include "systime.h"
 #include "radio.h"
 #include "LoRa_MacTypes.h"

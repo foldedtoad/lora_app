@@ -792,7 +792,7 @@ struct
 
 static void OnRadioTxDone( void )
 {
-    Mac_TxDoneParams.CurTime = TimerGetCurrentTime( );
+    Mac_TxDoneParams.CurTime = Os_TimerGetCurrentTime( );
     MacCtx.LastTxSysTime = SysTimeGet( );
 
     LoRa_MacRadioEvents.Events.TxDone = 1;
@@ -805,7 +805,7 @@ static void OnRadioTxDone( void )
 
 static void OnRadioRxDone( uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr )
 {
-    Mac_RxDoneParams.LastRxDone = TimerGetCurrentTime( );
+    Mac_RxDoneParams.LastRxDone = Os_TimerGetCurrentTime( );
     Mac_RxDoneParams.Payload = payload;
     Mac_RxDoneParams.Size = size;
     Mac_RxDoneParams.Rssi = rssi;
@@ -872,17 +872,17 @@ static void ProcessRadioTxDone( void )
         Radio.Sleep( );
     }
     // Setup timers
-    TimerSetValue( &MacCtx.RxWindowTimer1, MacCtx.RxWindow1Delay );
-    TimerStart( &MacCtx.RxWindowTimer1 );
-    TimerSetValue( &MacCtx.RxWindowTimer2, MacCtx.RxWindow2Delay );
-    TimerStart( &MacCtx.RxWindowTimer2 );
+    Os_TimerSetValue( &MacCtx.RxWindowTimer1, MacCtx.RxWindow1Delay );
+    Os_TimerStart( &MacCtx.RxWindowTimer1 );
+    Os_TimerSetValue( &MacCtx.RxWindowTimer2, MacCtx.RxWindow2Delay );
+    Os_TimerStart( &MacCtx.RxWindowTimer2 );
 
     if( ( MacCtx.NvmCtx->DeviceClass == CLASS_C ) || ( MacCtx.NodeAckRequested == true ) )
     {
         getPhy.Attribute = PHY_ACK_TIMEOUT;
         phyParam = RegionGetPhyParam( MacCtx.NvmCtx->Region, &getPhy );
-        TimerSetValue( &MacCtx.AckTimeoutTimer, MacCtx.RxWindow2Delay + phyParam.Value );
-        TimerStart( &MacCtx.AckTimeoutTimer );
+        Os_TimerSetValue( &MacCtx.AckTimeoutTimer, MacCtx.RxWindow2Delay + phyParam.Value );
+        Os_TimerStart( &MacCtx.AckTimeoutTimer );
     }
 
     // Store last Tx channel
@@ -963,7 +963,7 @@ static void ProcessRadioRxDone( void )
     MacCtx.McpsIndication.DeviceTimeAnsReceived = false;
 
     Radio.Sleep( );
-    TimerStop( &MacCtx.RxWindowTimer2 );
+    Os_TimerStop( &MacCtx.RxWindowTimer2 );
 
     // This function must be called even if we are not in class b mode yet.
     if( LoRa_MacClassBRxBeacon( payload, size ) == true )
@@ -1377,9 +1377,9 @@ static void HandleRadioRxErrorTimeout( LoRa_MacEventInfoStatus_t rx1EventInfoSta
             }
             LoRa_MacConfirmQueueSetStatusCmn( rx1EventInfoStatus );
 
-            if( TimerGetElapsedTime( MacCtx.NvmCtx->LastTxDoneTime ) >= MacCtx.RxWindow2Delay )
+            if( Os_TimerGetElapsedTime( MacCtx.NvmCtx->LastTxDoneTime ) >= MacCtx.RxWindow2Delay )
             {
-                TimerStop( &MacCtx.RxWindowTimer2 );
+                Os_TimerStop( &MacCtx.RxWindowTimer2 );
                 MacCtx.MacFlags.Bits.MacDone = 1;
             }
         }
@@ -1586,7 +1586,7 @@ static void LoRa_MacHandleMcpsRequest( void )
 
         if( stopRetransmission == true )
         {// Stop retransmission
-            TimerStop( &MacCtx.TxDelayedTimer );
+            Os_TimerStop( &MacCtx.TxDelayedTimer );
             MacCtx.MacState &= ~LORA_MAC_TX_DELAYED;
             StopRetransmission( );
         }
@@ -1684,7 +1684,7 @@ void LoRa_MacProcess( void )
 
 static void OnTxDelayedTimerEvent( void* context )
 {
-    TimerStop( &MacCtx.TxDelayedTimer );
+    Os_TimerStop( &MacCtx.TxDelayedTimer );
     MacCtx.MacState &= ~LORA_MAC_TX_DELAYED;
 
     // Schedule frame, allow delayed frame transmissions
@@ -1740,7 +1740,7 @@ static void OnRxWindow2TimerEvent( void* context )
 
 static void OnAckTimeoutTimerEvent( void* context )
 {
-    TimerStop( &MacCtx.AckTimeoutTimer );
+    Os_TimerStop( &MacCtx.AckTimeoutTimer );
 
     if( MacCtx.NodeAckRequested == true )
     {
@@ -2425,8 +2425,8 @@ static LoRa_MacStatus_t ScheduleTx( bool allowDelayedTx )
             if( dutyCycleTimeOff != 0 )
             {// Send later - prepare timer
                 MacCtx.MacState |= LORA_MAC_TX_DELAYED;
-                TimerSetValue( &MacCtx.TxDelayedTimer, dutyCycleTimeOff );
-                TimerStart( &MacCtx.TxDelayedTimer );
+                Os_TimerSetValue( &MacCtx.TxDelayedTimer, dutyCycleTimeOff );
+                Os_TimerStart( &MacCtx.TxDelayedTimer );
             }
             return LORA_MAC_STATUS_OK;
         }
@@ -2634,7 +2634,7 @@ static void ResetMacParameters( void )
  */
 static void RxWindowSetup( TimerEvent_t* rxTimer, RxConfigParams_t* rxConfig )
 {
-    TimerStop( rxTimer );
+    Os_TimerStop( rxTimer );
 
     // Ensure the radio is Idle
     Radio.Standby( );
@@ -3279,10 +3279,10 @@ LoRa_MacStatus_t LoRa_MacInitialization( LoRa_MacPrimitives_t* primitives, LoRa_
     MacCtx.NvmCtx->AggregatedTimeOff = 0;
 
     // Initialize timers
-    TimerInit( &MacCtx.TxDelayedTimer, OnTxDelayedTimerEvent );
-    TimerInit( &MacCtx.RxWindowTimer1, OnRxWindow1TimerEvent );
-    TimerInit( &MacCtx.RxWindowTimer2, OnRxWindow2TimerEvent );
-    TimerInit( &MacCtx.AckTimeoutTimer, OnAckTimeoutTimerEvent );
+    Os_TimerInit( &MacCtx.TxDelayedTimer, OnTxDelayedTimerEvent );
+    Os_TimerInit( &MacCtx.RxWindowTimer1, OnRxWindow1TimerEvent );
+    Os_TimerInit( &MacCtx.RxWindowTimer2, OnRxWindow2TimerEvent );
+    Os_TimerInit( &MacCtx.AckTimeoutTimer, OnAckTimeoutTimerEvent );
 
     // Store the current initialization time
     MacCtx.NvmCtx->InitializationTime = SysTimeGetMcuTime( );

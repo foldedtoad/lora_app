@@ -63,7 +63,7 @@ typedef uint32_t TimerTime_t;
  * \param [IN] obj          Structure containing the timer object parameters
  * \param [IN] callback     Function callback called at the end of the timeout
  */
-void TimerInit( TimerEvent_t *obj, void ( *callback )( void *context ) );
+void Os_TimerInit( TimerEvent_t *obj, void ( *callback )( void *context ) );
 
 /*!
  * \brief Sets a user defined object pointer
@@ -71,19 +71,19 @@ void TimerInit( TimerEvent_t *obj, void ( *callback )( void *context ) );
  * \param [IN] context User defined data object pointer to pass back
  *                     on IRQ handler callback
  */
-void TimerSetContext( TimerEvent_t *obj, void* context );
+void Os_TimerSetContext( TimerEvent_t *obj, void* context );
 
 /*!
  * Timer IRQ event handler
  */
-void TimerIrqHandler( void );
+void Os_TimerIrqHandler( void );
 
 /*!
  * \brief Starts and adds the timer object to the list of timer events
  *
  * \param [IN] obj Structure containing the timer object parameters
  */
-void TimerStart( TimerEvent_t *obj );
+void Os_TimerStart( TimerEvent_t *obj );
 
 /*!
  * \brief Checks if the provided timer is running
@@ -93,21 +93,21 @@ void TimerStart( TimerEvent_t *obj );
  * \retval status  returns the timer activity status [true: Started,
  *                                                    false: Stopped]
  */
-bool TimerIsStarted( TimerEvent_t *obj );
+bool Os_TimerIsStarted( TimerEvent_t *obj );
 
 /*!
  * \brief Stops and removes the timer object from the list of timer events
  *
  * \param [IN] obj Structure containing the timer object parameters
  */
-void TimerStop( TimerEvent_t *obj );
+void Os_TimerStop( TimerEvent_t *obj );
 
 /*!
  * \brief Resets the timer object
  *
  * \param [IN] obj Structure containing the timer object parameters
  */
-void TimerReset( TimerEvent_t *obj );
+void Os_TimerReset( TimerEvent_t *obj );
 
 /*!
  * \brief Set timer new timeout value
@@ -115,14 +115,14 @@ void TimerReset( TimerEvent_t *obj );
  * \param [IN] obj   Structure containing the timer object parameters
  * \param [IN] value New timer timeout value
  */
-void TimerSetValue( TimerEvent_t *obj, uint32_t value );
+void Os_TimerSetValue( TimerEvent_t *obj, uint32_t value );
 
 /*!
  * \brief Read the current time
  *
  * \retval time returns current time
  */
-TimerTime_t TimerGetCurrentTime( void );
+TimerTime_t Os_TimerGetCurrentTime( void );
 
 /*!
  * \brief Return the Time elapsed since a fix moment in Time
@@ -132,7 +132,7 @@ TimerTime_t TimerGetCurrentTime( void );
  * \param [IN] past         fix moment in Time
  * \retval time             returns elapsed time
  */
-TimerTime_t TimerGetElapsedTime( TimerTime_t past );
+TimerTime_t Os_TimerGetElapsedTime( TimerTime_t past );
 
 /*!
  * \brief Computes the temperature compensation for a period of time on a
@@ -143,12 +143,12 @@ TimerTime_t TimerGetElapsedTime( TimerTime_t past );
  *
  * \retval Compensated time period
  */
-TimerTime_t TimerTempCompensation( TimerTime_t period, float temperature );
+TimerTime_t Os_TimerTempCompensation( TimerTime_t period, float temperature );
 
 /*!
  * \brief Processes pending timer events
  */
-void TimerProcess( void );
+void Os_TimerProcess( void );
 
 #ifdef __cplusplus
 }

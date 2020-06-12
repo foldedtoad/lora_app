@@ -160,12 +160,12 @@ static bool AppLedStateOn = false;
 /*!
  * Timer to handle the state of LED1
  */
-static TimerEvent_t Led1Timer;
+//static TimerEvent_t Led1Timer;
 
 /*!
  * Timer to handle the state of LED2
  */
-static TimerEvent_t Led2Timer;
+//static TimerEvent_t Led2Timer;
 
 /*!
  * Indicates if a new packet can be sent
@@ -461,7 +461,7 @@ static void OnTxNextPacketTimerEvent( void* context )
     MibRequestConfirm_t mibReq;
     LoRa_MacStatus_t status;
 
-    TimerStop( &TxNextPacketTimer );
+    Os_TimerStop( &TxNextPacketTimer );
 
     mibReq.Type = MIB_NETWORK_ACTIVATION;
     status = LoRa_MacMibGetRequestConfirm( &mibReq );
@@ -481,16 +481,15 @@ static void OnTxNextPacketTimerEvent( void* context )
     }
 }
 
+#if 0  // not used
 /*!
  * \brief Function executed on Led 1 Timeout event
  */
 static void OnLed1TimerEvent( void* context )
 {
-#if 0
     TimerStop( &Led1Timer );
     // Switch LED 1 OFF
     GpioWrite( &Led1, 0 );
-#endif
 }
 
 /*!
@@ -498,12 +497,12 @@ static void OnLed1TimerEvent( void* context )
  */
 static void OnLed2TimerEvent( void* context )
 {
-#if 0
+
     TimerStop( &Led2Timer );
     // Switch LED 1 OFF
     GpioWrite( &Led1, 0 );
-#endif
 }
+#endif
 
 /*!
  * \brief   MCPS-Confirm event function
@@ -1034,7 +1033,7 @@ int lora_app_init( void )
     while( 1 )
     {
         // Tick the RTC to execute callback in context of the main loop (in stead of the IRQ)
-        TimerProcess( );
+        Os_TimerProcess( );
         // Process Radio IRQ
         if( Radio.IrqProcess != NULL )
         {
@@ -1134,13 +1133,13 @@ int lora_app_init( void )
 
             case DEVICE_STATE_START:
             {
-                TimerInit( &TxNextPacketTimer, OnTxNextPacketTimerEvent );
+                Os_TimerInit( &TxNextPacketTimer, OnTxNextPacketTimerEvent );
 
-                TimerInit( &Led1Timer, OnLed1TimerEvent );
-                TimerSetValue( &Led1Timer, 25 );
+//                Os_TimerInit( &Led1Timer, OnLed1TimerEvent );
+//                Os_TimerSetValue( &Led1Timer, 25 );
 
-                TimerInit( &Led2Timer, OnLed2TimerEvent );
-                TimerSetValue( &Led2Timer, 25 );
+//                Os_TimerInit( &Led2Timer, OnLed2TimerEvent );
+//                Os_TimerSetValue( &Led2Timer, 25 );
 
                 mibReq.Type = MIB_PUBLIC_NETWORK;
                 mibReq.Param.EnablePublicNetwork = LORAWAN_PUBLIC_NETWORK;
@@ -1272,8 +1271,8 @@ int lora_app_init( void )
                 }
 
                 // Schedule next packet transmission
-                TimerSetValue( &TxNextPacketTimer, TxDutyCycleTime );
-                TimerStart( &TxNextPacketTimer );
+                Os_TimerSetValue( &TxNextPacketTimer, TxDutyCycleTime );
+                Os_TimerStart( &TxNextPacketTimer );
                 break;
             }
             case DEVICE_STATE_SLEEP:

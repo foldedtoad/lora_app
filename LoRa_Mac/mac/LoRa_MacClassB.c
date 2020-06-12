@@ -364,7 +364,7 @@ static bool CalcNextSlotTime( uint16_t slotOffset, uint16_t pingPeriod, uint16_t
 {
     uint8_t currentPingSlot = 0;
     TimerTime_t slotTime = 0;
-    TimerTime_t currentTime = TimerGetCurrentTime( );
+    TimerTime_t currentTime = Os_TimerGetCurrentTime( );
 
     // Calculate the point in time of the last beacon even if we missed it
     slotTime = ( ( currentTime - SysTimeToMs( Ctx.BeaconCtx.LastBeaconRx ) ) % CLASSB_BEACON_INTERVAL );
@@ -718,7 +718,7 @@ bool LoRa_MacClassBIsAcquisitionInProgress( void )
 void LoRa_MacClassBBeaconTimerEvent( void* context )
 {
 #ifdef LORA_MAC_CLASSB_ENABLED
-    Ctx.BeaconCtx.TimeStamp = TimerGetCurrentTime( );
+    Ctx.BeaconCtx.TimeStamp = Os_TimerGetCurrentTime( );
     TimerStop( &Ctx.BeaconTimer );
     LoRa_MacClassBEvents.Events.Beacon = 1;
 
@@ -887,7 +887,7 @@ static void LoRa_MacClassBProcessBeacon( void )
             activateTimer = true;
             GetTemperatureLevel( &Ctx.LoRa_MacClassBCallbacks, &Ctx.BeaconCtx );
             beaconEventTime = Ctx.BeaconCtx.NextBeaconRxAdjusted - Radio.GetWakeupTime( );
-            currentTime = TimerGetCurrentTime( );
+            currentTime = Os_TimerGetCurrentTime( );
 
             if( beaconEventTime > currentTime )
             {
@@ -1677,7 +1677,7 @@ bool LoRa_MacClassBBeaconFreqReq( uint32_t frequency )
 TimerTime_t LoRa_MacClassBIsUplinkCollision( TimerTime_t txTimeOnAir )
 {
 #ifdef LORA_MAC_CLASSB_ENABLED
-    TimerTime_t currentTime = TimerGetCurrentTime( );
+    TimerTime_t currentTime = Os_TimerGetCurrentTime( );
     TimerTime_t beaconReserved = 0;
     TimerTime_t nextBeacon = SysTimeToMs( Ctx.BeaconCtx.NextBeaconRx );
 
