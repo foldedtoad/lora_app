@@ -4,6 +4,8 @@
 #include <zephyr.h>
 #include <sys/printk.h>
 
+#include "LoRaMac.h"
+
 #include <logging/log.h>
 LOG_MODULE_REGISTER(main, 3);
 
@@ -36,7 +38,8 @@ K_THREAD_DEFINE(bluetooth_id, STACKSIZE, bluetooth_thread,
 #ifdef CONFIG_LORA
 #include "lora_app.h"
 
-#ifdef LORA_APP_TX_MODE
+//#ifdef LORA_APP_TX_MODE
+#if 0
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
 /*---------------------------------------------------------------------------*/
@@ -53,7 +56,8 @@ K_THREAD_DEFINE(lora_send_id, STACKSIZE, lora_send_thread,
                 NULL, NULL, NULL, PRIORITY, 0, K_NO_WAIT);
 #endif
 
-#ifndef LORA_APP_TX_MODE
+//#ifndef LORA_APP_TX_MODE
+#if 0
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
 /*---------------------------------------------------------------------------*/
@@ -77,9 +81,15 @@ K_THREAD_DEFINE(lora_receive_id, STACKSIZE, lora_receive_thread,
 /*---------------------------------------------------------------------------*/
 void main_thread(void * id, void * unused1, void * unused2)
 {
+    LoRaMacPrimitives_t  primitives = {0};
+    LoRaMacCallback_t    callbacks  = {0};
+    LoRaMacRegion_t      region     = LORAMAC_REGION_US915;
+
     LOG_INF("%s", __func__);
 
     k_sleep( K_MSEC(500));
+
+    LoRaMacInitialization(&primitives, &callbacks, region);
 
    //ble_start_advertising();
 }
