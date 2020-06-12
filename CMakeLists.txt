@@ -18,9 +18,11 @@ target_include_directories(app PRIVATE LoRa_Mac/support)
 
 FILE(GLOB app_sources src/*.c)
 FILE(GLOB mac_sources LoRa_Mac/mac/*.c)
+FILE(GLOB support_sources LoRa_Mac/support/*.c)
 target_sources(app PRIVATE
   ${app_sources}
   ${mac_sources}
+  ${support_sources}
   )
 
 # zephyr_compile_options(-save-temps)
