@@ -1,5 +1,5 @@
 /*!
- * \file      LoRaMacTypes.h
+ * \file      LoRa_MacTypes.h
  *
  * \brief     LoRa MAC layer internal types definition. Please do not include in application sources.
  *
@@ -28,12 +28,12 @@
  *
  * \author    Johannes Bruder ( STACKFORCE )
  *
- * addtogroup LORAMAC
+ * addtogroup LORA_MAC
  * \{
  *
  */
-#ifndef __LORAMAC_TYPES_H__
-#define __LORAMAC_TYPES_H__
+#ifndef __LORA_MAC_TYPES_H__
+#define __LORA_MAC_TYPES_H__
 
 #ifdef __cplusplus
 extern "C"
@@ -47,12 +47,12 @@ extern "C"
 /*!
  * Start value for unicast keys enumeration
  */
-#define LORAMAC_CRYPTO_UNICAST_KEYS     0
+#define LORA_MAC_CRYPTO_UNICAST_KEYS     0
 
 /*!
  * Start value for multicast keys enumeration
  */
-#define LORAMAC_CRYPTO_MULTICAST_KEYS   127
+#define LORA_MAC_CRYPTO_MULTICAST_KEYS   127
 
 /*!
  * LoRaWAN devices classes definition
@@ -158,7 +158,7 @@ typedef enum eFCntIdentifier
 }FCntIdentifier_t;
 
 /*!
- * LoRaMac Key identifier
+ * LoRa_Mac Key identifier
  */
 typedef enum eKeyIdentifier
 {
@@ -206,7 +206,7 @@ typedef enum eKeyIdentifier
     /*!
      * Multicast key encryption key
      */
-    MC_KE_KEY = LORAMAC_CRYPTO_MULTICAST_KEYS,
+    MC_KE_KEY = LORA_MAC_CRYPTO_MULTICAST_KEYS,
     /*!
      * Multicast root key index 0
      */
@@ -266,7 +266,7 @@ typedef enum eKeyIdentifier
 }KeyIdentifier_t;
 
 /*!
- * LoRaMac Crypto address identifier
+ * LoRa_Mac Crypto address identifier
  */
 typedef enum eAddressIdentifier
 {
@@ -401,7 +401,7 @@ typedef struct sMulticastCtx
 }MulticastCtx_t;
 
 /*!
- * LoRaMac join-request / rejoin type identifier
+ * LoRa_Mac join-request / rejoin type identifier
  */
 typedef enum eJoinReqIdentifier
 {
@@ -428,7 +428,7 @@ typedef enum eJoinReqIdentifier
  *
  * LoRaWAN Specification V1.1.0, chapter 5, table 4
  */
-typedef enum eLoRaMacMoteCmd
+typedef enum eLoRa_MacMoteCmd
 {
     /*!
      * LinkCheckReq
@@ -486,14 +486,14 @@ typedef enum eLoRaMacMoteCmd
      * BeaconFreqAns
      */
     MOTE_MAC_BEACON_FREQ_ANS         = 0x13,
-}LoRaMacMoteCmd_t;
+}LoRa_MacMoteCmd_t;
 
 /*!
  * LoRaMAC server MAC commands
  *
  * LoRaWAN Specification V1.1.0 chapter 5, table 4
  */
-typedef enum eLoRaMacSrvCmd
+typedef enum eLoRa_MacSrvCmd
 {
     /*!
      * ResetInd
@@ -555,7 +555,7 @@ typedef enum eLoRaMacSrvCmd
      * BeaconFreqReq
      */
     SRV_MAC_BEACON_FREQ_REQ          = 0x13,
-}LoRaMacSrvCmd_t;
+}LoRa_MacSrvCmd_t;
 
 /*!
  * LoRaMAC band parameters definition
@@ -589,7 +589,7 @@ typedef struct sBand
  *
  * LoRaWAN Specification V1.0.2, chapter 4.2.1, table 1
  */
-typedef enum eLoRaMacFrameType
+typedef enum eLoRa_MacFrameType
 {
     /*!
      * LoRaMAC join request frame
@@ -619,12 +619,12 @@ typedef enum eLoRaMacFrameType
      * LoRaMAC proprietary frame
      */
     FRAME_TYPE_PROPRIETARY           = 0x07,
-}LoRaMacFrameType_t;
+}LoRa_MacFrameType_t;
 
 /*!
  * LoRaMAC Battery level indicator
  */
-typedef enum eLoRaMacBatteryLevel
+typedef enum eLoRa_MacBatteryLevel
 {
     /*!
      * External power source
@@ -642,11 +642,11 @@ typedef enum eLoRaMacBatteryLevel
      * Battery level - no measurement available
      */
     BAT_LEVEL_NO_MEASURE             = 0xFF,
-}LoRaMacBatteryLevel_t;
+}LoRa_MacBatteryLevel_t;
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __LORAMAC_TYPES_H__
+#endif // __LORA_MAC_TYPES_H__
 

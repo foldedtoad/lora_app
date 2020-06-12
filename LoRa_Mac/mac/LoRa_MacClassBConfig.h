@@ -1,5 +1,5 @@
 /*!
- * \file      LoRaMacClassBConfig.h
+ * \file      LoRa_MacClassBConfig.h
  *
  * \brief     LoRa MAC Class B configuration
  *
@@ -28,13 +28,13 @@
  *
  * \author    Daniel Jaeckle ( STACKFORCE )
  *
- * \defgroup  LORAMACCLASSB LoRa MAC Class B configuration
+ * \defgroup  LORA_MACCLASSB LoRa MAC Class B configuration
  *            This header file contains parameters to configure the class b operation.
  *            By default, all parameters are set according to the specification.
  * \{
  */
-#ifndef __LORAMACCLASSBCONFIG_H__
-#define __LORAMACCLASSBCONFIG_H__
+#ifndef __LORA_MACCLASSBCONFIG_H__
+#define __LORA_MACCLASSBCONFIG_H__
 
 #ifdef __cplusplus
 extern "C"
@@ -121,4 +121,4 @@ extern "C"
 }
 #endif
 
-#endif // __LORAMACCLASSBCONFIG_H__
+#endif // __LORA_MACCLASSBCONFIG_H__

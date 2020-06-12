@@ -12,13 +12,15 @@ include($ENV{ZEPHYR_BASE}/cmake/app/boilerplate.cmake NO_POLICY_SCOPE)
 project(lora_app)
 
 target_include_directories(app PRIVATE inc)
-target_include_directories(app PRIVATE LoRaMac/mac)
-target_include_directories(app PRIVATE LoRaMac/mac/region)
-target_include_directories(app PRIVATE LoRaMac/support)
+target_include_directories(app PRIVATE LoRa_Mac/mac)
+target_include_directories(app PRIVATE LoRa_Mac/mac/region)
+target_include_directories(app PRIVATE LoRa_Mac/support)
 
 FILE(GLOB app_sources src/*.c)
+FILE(GLOB mac_sources LoRa_Mac/mac/*.c)
 target_sources(app PRIVATE
   ${app_sources}
+  ${mac_sources}
   )
 
 # zephyr_compile_options(-save-temps)

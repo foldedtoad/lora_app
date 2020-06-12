@@ -60,7 +60,7 @@ extern "C"
 #include <stdint.h>
 #include <stdbool.h>
 #include "utilities.h"
-#include "LoRaMac.h"
+#include "LoRa_Mac.h"
 #include "timer.h"
 
 /*!
@@ -1073,7 +1073,7 @@ typedef struct sRxConfigParams
     /*!
      * Sets the RX window.
      */
-    LoRaMacRxSlot_t RxSlot;
+    LoRa_MacRxSlot_t RxSlot;
 }RxConfigParams_t;
 
 /*!
@@ -1373,7 +1373,7 @@ typedef struct sRxBeaconSetupParams
  *
  * \retval Return true, if the region is supported.
  */
-bool RegionIsActive( LoRaMacRegion_t region );
+bool RegionIsActive( LoRa_MacRegion_t region );
 
 /*!
  * \brief The function gets a value of a specific phy attribute.
@@ -1384,7 +1384,7 @@ bool RegionIsActive( LoRaMacRegion_t region );
  *
  * \retval Returns a structure containing the PHY parameter.
  */
-PhyParam_t RegionGetPhyParam( LoRaMacRegion_t region, GetPhyParams_t* getPhy );
+PhyParam_t RegionGetPhyParam( LoRa_MacRegion_t region, GetPhyParams_t* getPhy );
 
 /*!
  * \brief Updates the last TX done parameters of the current channel.
@@ -1393,7 +1393,7 @@ PhyParam_t RegionGetPhyParam( LoRaMacRegion_t region, GetPhyParams_t* getPhy );
  *
  * \param [IN] txDone Pointer to the function parameters.
  */
-void RegionSetBandTxDone( LoRaMacRegion_t region, SetBandTxDoneParams_t* txDone );
+void RegionSetBandTxDone( LoRa_MacRegion_t region, SetBandTxDoneParams_t* txDone );
 
 /*!
  * \brief Initializes the channels masks and the channels.
@@ -1402,7 +1402,7 @@ void RegionSetBandTxDone( LoRaMacRegion_t region, SetBandTxDoneParams_t* txDone 
  *
  * \param [IN] params Pointer to the function parameters.
  */
-void RegionInitDefaults( LoRaMacRegion_t region, InitDefaultsParams_t* params );
+void RegionInitDefaults( LoRa_MacRegion_t region, InitDefaultsParams_t* params );
 
 /*!
  * \brief Returns a pointer to the internal context and its size.
@@ -1413,7 +1413,7 @@ void RegionInitDefaults( LoRaMacRegion_t region, InitDefaultsParams_t* params );
  *
  * \retval     Points to a structure where the module store its non-volatile context.
  */
-void* RegionGetNvmCtx( LoRaMacRegion_t region, GetNvmCtxParams_t* params );
+void* RegionGetNvmCtx( LoRa_MacRegion_t region, GetNvmCtxParams_t* params );
 
 /*!
  * \brief Verifies a parameter.
@@ -1426,7 +1426,7 @@ void* RegionGetNvmCtx( LoRaMacRegion_t region, GetNvmCtxParams_t* params );
  *
  * \retval Returns true, if the parameter is valid.
  */
-bool RegionVerify( LoRaMacRegion_t region, VerifyParams_t* verify, PhyAttribute_t phyAttribute );
+bool RegionVerify( LoRa_MacRegion_t region, VerifyParams_t* verify, PhyAttribute_t phyAttribute );
 
 /*!
  * \brief The function parses the input buffer and sets up the channels of the
@@ -1436,7 +1436,7 @@ bool RegionVerify( LoRaMacRegion_t region, VerifyParams_t* verify, PhyAttribute_
  *
  * \param [IN] applyCFList Pointer to the function parameters.
  */
-void RegionApplyCFList( LoRaMacRegion_t region, ApplyCFListParams_t* applyCFList );
+void RegionApplyCFList( LoRa_MacRegion_t region, ApplyCFListParams_t* applyCFList );
 
 /*!
  * \brief Sets a channels mask.
@@ -1447,7 +1447,7 @@ void RegionApplyCFList( LoRaMacRegion_t region, ApplyCFListParams_t* applyCFList
  *
  * \retval Returns true, if the channels mask could be set.
  */
-bool RegionChanMaskSet( LoRaMacRegion_t region, ChanMaskSetParams_t* chanMaskSet );
+bool RegionChanMaskSet( LoRa_MacRegion_t region, ChanMaskSetParams_t* chanMaskSet );
 
 /*!
  * \brief Configuration of the RX windows.
@@ -1460,7 +1460,7 @@ bool RegionChanMaskSet( LoRaMacRegion_t region, ChanMaskSetParams_t* chanMaskSet
  *
  * \retval Returns true, if the configuration was applied successfully.
  */
-bool RegionRxConfig( LoRaMacRegion_t region, RxConfigParams_t* rxConfig, int8_t* datarate );
+bool RegionRxConfig( LoRa_MacRegion_t region, RxConfigParams_t* rxConfig, int8_t* datarate );
 
 /*
  * Rx window precise timing
@@ -1515,7 +1515,7 @@ bool RegionRxConfig( LoRaMacRegion_t region, RxConfigParams_t* rxConfig, int8_t*
  *
  * \param [OUT]rxConfigParams Returns updated WindowTimeout and WindowOffset fields.
  */
-void RegionComputeRxWindowParameters( LoRaMacRegion_t region, int8_t datarate, uint8_t minRxSymbols, uint32_t rxError, RxConfigParams_t *rxConfigParams );
+void RegionComputeRxWindowParameters( LoRa_MacRegion_t region, int8_t datarate, uint8_t minRxSymbols, uint32_t rxError, RxConfigParams_t *rxConfigParams );
 
 /*!
  * \brief TX configuration.
@@ -1530,7 +1530,7 @@ void RegionComputeRxWindowParameters( LoRaMacRegion_t region, int8_t datarate, u
  *
  * \retval Returns true, if the configuration was applied successfully.
  */
-bool RegionTxConfig( LoRaMacRegion_t region, TxConfigParams_t* txConfig, int8_t* txPower, TimerTime_t* txTimeOnAir );
+bool RegionTxConfig( LoRa_MacRegion_t region, TxConfigParams_t* txConfig, int8_t* txPower, TimerTime_t* txTimeOnAir );
 
 /*!
  * \brief The function processes a Link ADR Request.
@@ -1549,7 +1549,7 @@ bool RegionTxConfig( LoRaMacRegion_t region, TxConfigParams_t* txConfig, int8_t*
  *
  * \retval Returns the status of the operation, according to the LoRaMAC specification.
  */
-uint8_t RegionLinkAdrReq( LoRaMacRegion_t region, LinkAdrReqParams_t* linkAdrReq, int8_t* drOut, int8_t* txPowOut, uint8_t* nbRepOut, uint8_t* nbBytesParsed );
+uint8_t RegionLinkAdrReq( LoRa_MacRegion_t region, LinkAdrReqParams_t* linkAdrReq, int8_t* drOut, int8_t* txPowOut, uint8_t* nbRepOut, uint8_t* nbBytesParsed );
 
 /*!
  * \brief The function processes a RX Parameter Setup Request.
@@ -1560,7 +1560,7 @@ uint8_t RegionLinkAdrReq( LoRaMacRegion_t region, LinkAdrReqParams_t* linkAdrReq
  *
  * \retval Returns the status of the operation, according to the LoRaMAC specification.
  */
-uint8_t RegionRxParamSetupReq( LoRaMacRegion_t region, RxParamSetupReqParams_t* rxParamSetupReq );
+uint8_t RegionRxParamSetupReq( LoRa_MacRegion_t region, RxParamSetupReqParams_t* rxParamSetupReq );
 
 /*!
  * \brief The function processes a New Channel Request.
@@ -1571,7 +1571,7 @@ uint8_t RegionRxParamSetupReq( LoRaMacRegion_t region, RxParamSetupReqParams_t* 
  *
  * \retval Returns the status of the operation, according to the LoRaMAC specification.
  */
-uint8_t RegionNewChannelReq( LoRaMacRegion_t region, NewChannelReqParams_t* newChannelReq );
+uint8_t RegionNewChannelReq( LoRa_MacRegion_t region, NewChannelReqParams_t* newChannelReq );
 
 /*!
  * \brief The function processes a TX ParamSetup Request.
@@ -1584,7 +1584,7 @@ uint8_t RegionNewChannelReq( LoRaMacRegion_t region, NewChannelReqParams_t* newC
  *         Returns -1, if the functionality is not implemented. In this case, the end node
  *         shall ignore the command.
  */
-int8_t RegionTxParamSetupReq( LoRaMacRegion_t region, TxParamSetupReqParams_t* txParamSetupReq );
+int8_t RegionTxParamSetupReq( LoRa_MacRegion_t region, TxParamSetupReqParams_t* txParamSetupReq );
 
 /*!
  * \brief The function processes a DlChannel Request.
@@ -1595,7 +1595,7 @@ int8_t RegionTxParamSetupReq( LoRaMacRegion_t region, TxParamSetupReqParams_t* t
  *
  * \retval Returns the status of the operation, according to the LoRaMAC specification.
  */
-uint8_t RegionDlChannelReq( LoRaMacRegion_t region, DlChannelReqParams_t* dlChannelReq );
+uint8_t RegionDlChannelReq( LoRa_MacRegion_t region, DlChannelReqParams_t* dlChannelReq );
 
 /*!
  * \brief Alternates the datarate of the channel for the join request.
@@ -1608,7 +1608,7 @@ uint8_t RegionDlChannelReq( LoRaMacRegion_t region, DlChannelReqParams_t* dlChan
  *
  * \retval Datarate to apply.
  */
-int8_t RegionAlternateDr( LoRaMacRegion_t region, int8_t currentDr, AlternateDrType_t type );
+int8_t RegionAlternateDr( LoRa_MacRegion_t region, int8_t currentDr, AlternateDrType_t type );
 
 /*!
  * \brief Calculates the back-off time.
@@ -1617,7 +1617,7 @@ int8_t RegionAlternateDr( LoRaMacRegion_t region, int8_t currentDr, AlternateDrT
  *
  * \param [IN] calcBackOff Pointer to the function parameters.
  */
-void RegionCalcBackOff( LoRaMacRegion_t region, CalcBackOffParams_t* calcBackOff );
+void RegionCalcBackOff( LoRa_MacRegion_t region, CalcBackOffParams_t* calcBackOff );
 
 /*!
  * \brief Searches and set the next random available channel
@@ -1633,7 +1633,7 @@ void RegionCalcBackOff( LoRaMacRegion_t region, CalcBackOffParams_t* calcBackOff
  *
  * \retval Function status [1: OK, 0: Unable to find a channel on the current datarate].
  */
-LoRaMacStatus_t RegionNextChannel( LoRaMacRegion_t region, NextChanParams_t* nextChanParams, uint8_t* channel, TimerTime_t* time, TimerTime_t* aggregatedTimeOff );
+LoRa_MacStatus_t RegionNextChannel( LoRa_MacRegion_t region, NextChanParams_t* nextChanParams, uint8_t* channel, TimerTime_t* time, TimerTime_t* aggregatedTimeOff );
 
 /*!
  * \brief Adds a channel.
@@ -1644,7 +1644,7 @@ LoRaMacStatus_t RegionNextChannel( LoRaMacRegion_t region, NextChanParams_t* nex
  *
  * \retval Status of the operation.
  */
-LoRaMacStatus_t RegionChannelAdd( LoRaMacRegion_t region, ChannelAddParams_t* channelAdd );
+LoRa_MacStatus_t RegionChannelAdd( LoRa_MacRegion_t region, ChannelAddParams_t* channelAdd );
 
 /*!
  * \brief Removes a channel.
@@ -1655,7 +1655,7 @@ LoRaMacStatus_t RegionChannelAdd( LoRaMacRegion_t region, ChannelAddParams_t* ch
  *
  * \retval Returns true, if the channel was removed successfully.
  */
-bool RegionChannelsRemove( LoRaMacRegion_t region, ChannelRemoveParams_t* channelRemove );
+bool RegionChannelsRemove( LoRa_MacRegion_t region, ChannelRemoveParams_t* channelRemove );
 
 /*!
  * \brief Sets the radio into continuous wave mode.
@@ -1664,7 +1664,7 @@ bool RegionChannelsRemove( LoRaMacRegion_t region, ChannelRemoveParams_t* channe
  *
  * \param [IN] continuousWave Pointer to the function parameters.
  */
-void RegionSetContinuousWave( LoRaMacRegion_t region, ContinuousWaveParams_t* continuousWave );
+void RegionSetContinuousWave( LoRa_MacRegion_t region, ContinuousWaveParams_t* continuousWave );
 
 /*!
  * \brief Computes new datarate according to the given offset
@@ -1677,7 +1677,7 @@ void RegionSetContinuousWave( LoRaMacRegion_t region, ContinuousWaveParams_t* co
  *
  * \retval newDr Computed datarate.
  */
-uint8_t RegionApplyDrOffset( LoRaMacRegion_t region, uint8_t downlinkDwellTime, int8_t dr, int8_t drOffset );
+uint8_t RegionApplyDrOffset( LoRa_MacRegion_t region, uint8_t downlinkDwellTime, int8_t dr, int8_t drOffset );
 
 /*!
  * \brief Sets the radio into beacon reception mode
@@ -1686,7 +1686,7 @@ uint8_t RegionApplyDrOffset( LoRaMacRegion_t region, uint8_t downlinkDwellTime, 
  *
  * \param [out] outDr Datarate used to receive the beacon
  */
-void RegionRxBeaconSetup( LoRaMacRegion_t region, RxBeaconSetup_t* rxBeaconSetup, uint8_t* outDr );
+void RegionRxBeaconSetup( LoRa_MacRegion_t region, RxBeaconSetup_t* rxBeaconSetup, uint8_t* outDr );
 
 /*! \} defgroup REGION */
 

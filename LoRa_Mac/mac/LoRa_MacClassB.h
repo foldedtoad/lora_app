@@ -1,5 +1,5 @@
 /*!
- * \file      LoRaMacClassB.h
+ * \file      LoRa_MacClassB.h
  *
  * \brief     LoRa MAC Class B layer implementation
  *
@@ -28,14 +28,14 @@
  *
  * \author    Daniel Jaeckle ( STACKFORCE )
  *
- * \defgroup  LORAMACCLASSB LoRa MAC Class B layer implementation
+ * \defgroup  LORA_MACCLASSB LoRa MAC Class B layer implementation
  *            This module specifies the API implementation of the LoRaMAC Class B layer.
- *            This is a placeholder for a detailed description of the LoRaMac
+ *            This is a placeholder for a detailed description of the LoRa_Mac
  *            layer and the supported features.
  * \{
  */
-#ifndef __LORAMACCLASSB_H__
-#define __LORAMACCLASSB_H__
+#ifndef __LORA_MACCLASSB_H__
+#define __LORA_MACCLASSB_H__
 
 #ifdef __cplusplus
 extern "C"
@@ -43,7 +43,7 @@ extern "C"
 #endif
 
 #include "systime.h"
-#include "LoRaMacTypes.h"
+#include "LoRa_MacTypes.h"
 
 /*!
  * States of the class B beacon acquisition and tracking
@@ -225,7 +225,7 @@ typedef struct sBeaconContext
 /*!
  * Data structure which contains the callbacks
  */
-typedef struct sLoRaMacClassBCallback
+typedef struct sLoRa_MacClassBCallback
 {
     /*!
      * \brief   Measures the temperature level
@@ -240,12 +240,12 @@ typedef struct sLoRaMacClassBCallback
      *\warning  Runs in a IRQ context. Should only change variables state.
      */
     void ( *MacProcessNotify )( void );
-}LoRaMacClassBCallback_t;
+}LoRa_MacClassBCallback_t;
 
 /*!
  * Data structure which pointers to the properties LoRaMAC
  */
-typedef struct sLoRaMacClassBParams
+typedef struct sLoRa_MacClassBParams
 {
     /*!
      * Pointer to the MlmeIndication structure
@@ -260,32 +260,32 @@ typedef struct sLoRaMacClassBParams
      */
     MlmeConfirm_t *MlmeConfirm;
     /*!
-     * Pointer to the LoRaMacFlags structure
+     * Pointer to the LoRa_MacFlags structure
      */
-    LoRaMacFlags_t *LoRaMacFlags;
+    LoRa_MacFlags_t *LoRa_MacFlags;
     /*!
-     * Pointer to the LoRaMac device address
+     * Pointer to the LoRa_Mac device address
      */
-    uint32_t *LoRaMacDevAddr;
+    uint32_t *LoRa_MacDevAddr;
     /*!
-     * Pointer to the LoRaMac region definition
+     * Pointer to the LoRa_Mac region definition
      */
-    LoRaMacRegion_t *LoRaMacRegion;
+    LoRa_MacRegion_t *LoRa_MacRegion;
     /*!
-     * Pointer to the LoRaMacParams structure
+     * Pointer to the LoRa_MacParams structure
      */
-    LoRaMacParams_t *LoRaMacParams;
+    LoRa_MacParams_t *LoRa_MacParams;
     /*!
      * Pointer to the multicast channel list
      */
     MulticastCtx_t *MulticastChannels;
-}LoRaMacClassBParams_t;
+}LoRa_MacClassBParams_t;
 
 /*!
  * Signature of callback function to be called by this module when the
  * non-volatile needs to be saved.
  */
-typedef void ( *LoRaMacClassBNvmEvent )( void );
+typedef void ( *LoRa_MacClassBNvmEvent )( void );
 
 /*!
  * \brief Initialize LoRaWAN Class B
@@ -294,7 +294,7 @@ typedef void ( *LoRaMacClassBNvmEvent )( void );
  * \param [IN] callbacks Contains the callback which the Class B implementation needs
  * \param [IN] callback function which will be called when the non-volatile context needs to be saved.
  */
-void LoRaMacClassBInit( LoRaMacClassBParams_t *classBParams, LoRaMacClassBCallback_t *callbacks, LoRaMacClassBNvmEvent classBNvmCtxChanged );
+void LoRa_MacClassBInit( LoRa_MacClassBParams_t *classBParams, LoRa_MacClassBCallback_t *callbacks, LoRa_MacClassBNvmEvent classBNvmCtxChanged );
 
 /*!
  * Restores the internal non-volatile context from passed pointer.
@@ -303,7 +303,7 @@ void LoRaMacClassBInit( LoRaMacClassBParams_t *classBParams, LoRaMacClassBCallba
  *
  * \retval                     - Status of the operation
  */
-bool LoRaMacClassBRestoreNvmCtx( void* classBNvmCtx );
+bool LoRa_MacClassBRestoreNvmCtx( void* classBNvmCtx );
 
 /*!
  * Returns a pointer to the internal non-volatile context.
@@ -312,50 +312,50 @@ bool LoRaMacClassBRestoreNvmCtx( void* classBNvmCtx );
  *
  * \retval                    - Points to a structure where the module store its non-volatile context
  */
-void* LoRaMacClassBGetNvmCtx( size_t* classBNvmCtxSize );
+void* LoRa_MacClassBGetNvmCtx( size_t* classBNvmCtxSize );
 
 /*!
  * \brief Set the state of the beacon state machine
  *
  * \param [IN] beaconState Beacon state.
  */
-void LoRaMacClassBSetBeaconState( BeaconState_t beaconState );
+void LoRa_MacClassBSetBeaconState( BeaconState_t beaconState );
 
 /*!
  * \brief Set the state of the ping slot state machine
  *
  * \param [IN] pingSlotState Ping slot state.
  */
-void LoRaMacClassBSetPingSlotState( PingSlotState_t pingSlotState );
+void LoRa_MacClassBSetPingSlotState( PingSlotState_t pingSlotState );
 
 /*!
  * \brief Set the state of the multicast slot state machine
  *
  * \param [IN] pingSlotState multicast slot state.
  */
-void LoRaMacClassBSetMulticastSlotState( PingSlotState_t multicastSlotState );
+void LoRa_MacClassBSetMulticastSlotState( PingSlotState_t multicastSlotState );
 
 /*!
  * \brief Verifies if an acquisition procedure is in progress
  *
  * \retval [true, if the acquisition is in progress; false, if not]
  */
-bool LoRaMacClassBIsAcquisitionInProgress( void );
+bool LoRa_MacClassBIsAcquisitionInProgress( void );
 
 /*!
  * \brief State machine of the Class B for beaconing
  */
-void LoRaMacClassBBeaconTimerEvent( void* context );
+void LoRa_MacClassBBeaconTimerEvent( void* context );
 
 /*!
  * \brief State machine of the Class B for ping slots
  */
-void LoRaMacClassBPingSlotTimerEvent( void* context );
+void LoRa_MacClassBPingSlotTimerEvent( void* context );
 
 /*!
  * \brief State machine of the Class B for multicast slots
  */
-void LoRaMacClassBMulticastSlotTimerEvent( void* context );
+void LoRa_MacClassBMulticastSlotTimerEvent( void* context );
 
 /*!
  * \brief Receives and decodes the beacon frame
@@ -364,7 +364,7 @@ void LoRaMacClassBMulticastSlotTimerEvent( void* context );
  * \param [IN] size Size of the payload
  * \retval [true, if the node has received a beacon; false, if not]
  */
-bool LoRaMacClassBRxBeacon( uint8_t *payload, uint16_t size );
+bool LoRa_MacClassBRxBeacon( uint8_t *payload, uint16_t size );
 
 /*!
  * \brief The function validates, if the node expects a beacon
@@ -372,7 +372,7 @@ bool LoRaMacClassBRxBeacon( uint8_t *payload, uint16_t size );
  *
  * \retval [true, if the node expects a beacon; false, if not]
  */
-bool LoRaMacClassBIsBeaconExpected( void );
+bool LoRa_MacClassBIsBeaconExpected( void );
 
 /*!
  * \brief The function validates, if the node expects a ping slot
@@ -380,7 +380,7 @@ bool LoRaMacClassBIsBeaconExpected( void );
  *
  * \retval [true, if the node expects a ping slot; false, if not]
  */
-bool LoRaMacClassBIsPingExpected( void );
+bool LoRa_MacClassBIsPingExpected( void );
 
 /*!
  * \brief The function validates, if the node expects a multicast slot
@@ -388,83 +388,83 @@ bool LoRaMacClassBIsPingExpected( void );
  *
  * \retval [true, if the node expects a multicast slot; false, if not]
  */
-bool LoRaMacClassBIsMulticastExpected( void );
+bool LoRa_MacClassBIsMulticastExpected( void );
 
 /*!
  * \brief Verifies if the acquisition pending bit is set
  *
  * \retval [true, if the bit is set; false, if not]
  */
-bool LoRaMacClassBIsAcquisitionPending( void );
+bool LoRa_MacClassBIsAcquisitionPending( void );
 
 /*!
  * \brief Verifies if the beacon mode active bit is set
  *
  * \retval [true, if the bit is set; false, if not]
  */
-bool LoRaMacClassBIsBeaconModeActive( void );
+bool LoRa_MacClassBIsBeaconModeActive( void );
 
 /*!
  * \brief Stops the beacon and ping slot operation
  */
-void LoRaMacClassBHaltBeaconing( void );
+void LoRa_MacClassBHaltBeaconing( void );
 
 /*!
  * \brief Resumes the beacon and ping slot operation
  */
-void LoRaMacClassBResumeBeaconing( void );
+void LoRa_MacClassBResumeBeaconing( void );
 
 /*!
  * \brief Sets the periodicity of the ping slots
  *
  * \param [IN] periodicity Periodicity
  */
-void LoRaMacClassBSetPingSlotInfo( uint8_t periodicity );
+void LoRa_MacClassBSetPingSlotInfo( uint8_t periodicity );
 
 /*!
  * \brief Switches the device class
  *
  * \param [IN] nextClass Device class to switch to
  *
- * \retval LoRaMacStatus_t Status of the operation.
+ * \retval LoRa_MacStatus_t Status of the operation.
  */
-LoRaMacStatus_t LoRaMacClassBSwitchClass( DeviceClass_t nextClass );
+LoRa_MacStatus_t LoRa_MacClassBSwitchClass( DeviceClass_t nextClass );
 
 /*!
  * \brief   LoRaMAC ClassB MIB-Get
  *
- * \details The mac information base service to get attributes of the LoRaMac
+ * \details The mac information base service to get attributes of the LoRa_Mac
  *          Class B layer.
  *
  * \param   [IN] mibRequest - MIB-GET-Request to perform. Refer to \ref MibRequestConfirm_t.
  *
- * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
- *          \ref LORAMAC_STATUS_OK,
- *          \ref LORAMAC_STATUS_SERVICE_UNKNOWN,
- *          \ref LORAMAC_STATUS_PARAMETER_INVALID.
+ * \retval  LoRa_MacStatus_t Status of the operation. Possible returns are:
+ *          \ref LORA_MAC_STATUS_OK,
+ *          \ref LORA_MAC_STATUS_SERVICE_UNKNOWN,
+ *          \ref LORA_MAC_STATUS_PARAMETER_INVALID.
  */
-LoRaMacStatus_t LoRaMacClassBMibGetRequestConfirm( MibRequestConfirm_t *mibGet );
+LoRa_MacStatus_t LoRa_MacClassBMibGetRequestConfirm( MibRequestConfirm_t *mibGet );
 
 /*!
  * \brief   LoRaMAC Class B MIB-Set
  *
- * \details The mac information base service to set attributes of the LoRaMac
+ * \details The mac information base service to set attributes of the LoRa_Mac
  *          Class B layer.
  *
  * \param   [IN] mibRequest - MIB-SET-Request to perform. Refer to \ref MibRequestConfirm_t.
  *
- * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
- *          \ref LORAMAC_STATUS_OK,
- *          \ref LORAMAC_STATUS_BUSY,
- *          \ref LORAMAC_STATUS_SERVICE_UNKNOWN,
- *          \ref LORAMAC_STATUS_PARAMETER_INVALID.
+ * \retval  LoRa_MacStatus_t Status of the operation. Possible returns are:
+ *          \ref LORA_MAC_STATUS_OK,
+ *          \ref LORA_MAC_STATUS_BUSY,
+ *          \ref LORA_MAC_STATUS_SERVICE_UNKNOWN,
+ *          \ref LORA_MAC_STATUS_PARAMETER_INVALID.
  */
-LoRaMacStatus_t LoRaMacMibClassBSetRequestConfirm( MibRequestConfirm_t *mibSet );
+LoRa_MacStatus_t LoRa_MacMibClassBSetRequestConfirm( MibRequestConfirm_t *mibSet );
 
 /*!
  * \brief This function handles the PING_SLOT_FREQ_ANS
  */
-void LoRaMacClassBPingSlotInfoAns( void );
+void LoRa_MacClassBPingSlotInfoAns( void );
 
 /*!
  * \brief This function handles the PING_SLOT_CHANNEL_REQ
@@ -474,7 +474,7 @@ void LoRaMacClassBPingSlotInfoAns( void );
  *
  * \retval Status for the MAC answer.
  */
-uint8_t LoRaMacClassBPingSlotChannelReq( uint8_t datarate, uint32_t frequency );
+uint8_t LoRa_MacClassBPingSlotChannelReq( uint8_t datarate, uint32_t frequency );
 
 /*!
  * \brief This function handles the BEACON_TIMING_ANS
@@ -483,12 +483,12 @@ uint8_t LoRaMacClassBPingSlotChannelReq( uint8_t datarate, uint32_t frequency );
  * \param [IN] beaconTimingChannel The beacon timing channel
  * \param [IN] lastRxDone The time of the last frame reception
  */
-void LoRaMacClassBBeaconTimingAns( uint16_t beaconTimingDelay, uint8_t beaconTimingChannel, TimerTime_t lastRxDone );
+void LoRa_MacClassBBeaconTimingAns( uint16_t beaconTimingDelay, uint8_t beaconTimingChannel, TimerTime_t lastRxDone );
 
 /*!
  * \brief This function handles the ClassB DEVICE_TIME_ANS
  */
-void LoRaMacClassBDeviceTimeAns( void );
+void LoRa_MacClassBDeviceTimeAns( void );
 
 /*!
  * \brief This function handles the BEACON_FREQ_REQ
@@ -497,7 +497,7 @@ void LoRaMacClassBDeviceTimeAns( void );
  *
  * \retval [true, if MAC shall send an answer; false, if not]
  */
-bool LoRaMacClassBBeaconFreqReq( uint32_t frequency );
+bool LoRa_MacClassBBeaconFreqReq( uint32_t frequency );
 
 /*!
  * \brief Queries the ping slot window time
@@ -506,19 +506,19 @@ bool LoRaMacClassBBeaconFreqReq( uint32_t frequency );
  *
  * \retval Returns the time the uplink should be delayed
  */
-TimerTime_t LoRaMacClassBIsUplinkCollision( TimerTime_t txTimeOnAir );
+TimerTime_t LoRa_MacClassBIsUplinkCollision( TimerTime_t txTimeOnAir );
 
 /*!
  * \brief Stops the timers for the RX slots. This includes the
  *        timers for ping and multicast slots.
  */
-void LoRaMacClassBStopRxSlots( void );
+void LoRa_MacClassBStopRxSlots( void );
 
 /*!
  * \brief Starts the timers for the RX slots. This includes the
  *        timers for ping and multicast slots.
  */
-void LoRaMacClassBStartRxSlots( void );
+void LoRa_MacClassBStartRxSlots( void );
 
 /*!
  * \brief Starts the timers for the RX slots. This includes the
@@ -528,12 +528,12 @@ void LoRaMacClassBStartRxSlots( void );
  *
  * \param [IN] multicastChannel Related multicast channel
  */
-void LoRaMacClassBSetMulticastPeriodicity( MulticastCtx_t* multicastChannel );
+void LoRa_MacClassBSetMulticastPeriodicity( MulticastCtx_t* multicastChannel );
 
-void LoRaMacClassBProcess( void );
+void LoRa_MacClassBProcess( void );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __LORAMACCLASSB_H__
+#endif // __LORA_MACCLASSB_H__

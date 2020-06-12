@@ -1,5 +1,5 @@
 /*!
- * \file      LoRaMacAdr.h
+ * \file      LoRa_MacAdr.h
  *
  * \brief     LoRa MAC ADR implementation
  *
@@ -30,19 +30,19 @@
  *
  * \author    Johannes Bruder ( STACKFORCE )
  *
- * \defgroup  LORAMACADR LoRa MAC ADR implementation
+ * \defgroup  LORA_MACADR LoRa MAC ADR implementation
  *            Implementation of the ADR algorithm for LoRa.
  * \{
  */
-#ifndef __LORAMACADR_H__
-#define __LORAMACADR_H__
+#ifndef __LORA_MACADR_H__
+#define __LORA_MACADR_H__
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-/*! \} defgroup LORAMACADR */
+/*! \} defgroup LORA_MACADR */
 
 /*
  * Parameter structure for the function CalcNextAdr.
@@ -88,7 +88,7 @@ typedef struct sCalcNextAdrParams
     /*!
      * Region
      */
-    LoRaMacRegion_t Region;
+    LoRa_MacRegion_t Region;
 }CalcNextAdrParams_t;
 
 /*!
@@ -104,10 +104,10 @@ typedef struct sCalcNextAdrParams
  *
  * \retval Returns true, if an ADR request should be performed.
  */
-bool LoRaMacAdrCalcNext( CalcNextAdrParams_t* adrNext, int8_t* drOut, int8_t* txPowOut, uint32_t* adrAckCounter );
+bool LoRa_MacAdrCalcNext( CalcNextAdrParams_t* adrNext, int8_t* drOut, int8_t* txPowOut, uint32_t* adrAckCounter );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __LORAMACADR_H__
+#endif // __LORA_MACADR_H__

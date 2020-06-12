@@ -4,7 +4,7 @@
 #include <zephyr.h>
 #include <sys/printk.h>
 
-#include "LoRaMac.h"
+#include "LoRa_Mac.h"
 
 #include <logging/log.h>
 LOG_MODULE_REGISTER(main, 3);
@@ -81,15 +81,15 @@ K_THREAD_DEFINE(lora_receive_id, STACKSIZE, lora_receive_thread,
 /*---------------------------------------------------------------------------*/
 void main_thread(void * id, void * unused1, void * unused2)
 {
-    LoRaMacPrimitives_t  primitives = {0};
-    LoRaMacCallback_t    callbacks  = {0};
-    LoRaMacRegion_t      region     = LORAMAC_REGION_US915;
+    LoRa_MacPrimitives_t  primitives = {0};
+    LoRa_MacCallback_t    callbacks  = {0};
+    LoRa_MacRegion_t      region     = LORA_MAC_REGION_US915;
 
     LOG_INF("%s", __func__);
 
     k_sleep( K_MSEC(500));
 
-    LoRaMacInitialization(&primitives, &callbacks, region);
+    LoRa_MacInitialization(&primitives, &callbacks, region);
 
    //ble_start_advertising();
 }

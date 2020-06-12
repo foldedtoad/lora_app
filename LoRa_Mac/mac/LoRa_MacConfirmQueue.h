@@ -1,5 +1,5 @@
 /*!
- * \file      LoRaMacConfirmQueue.h
+ * \file      LoRa_MacConfirmQueue.h
  *
  * \brief     LoRa MAC confirm queue implementation
  *
@@ -28,7 +28,7 @@
  *
  * \author    Daniel Jaeckle ( STACKFORCE )
  *
- * \defgroup  LORAMACCONFIRMQUEUE LoRa MAC confirm queue implementation
+ * \defgroup  LORA_MACCONFIRMQUEUE LoRa MAC confirm queue implementation
  *            This module specifies the API implementation of the LoRaMAC confirm queue.
  *            The confirm queue is implemented with as a ring buffer. The number of
  *            elements can be defined with \ref LORA_MAC_MLME_CONFIRM_QUEUE_LEN. The
@@ -36,8 +36,8 @@
  *            Mlme_t type.
  * \{
  */
-#ifndef __LORAMAC_CONFIRMQUEUE_H__
-#define __LORAMAC_CONFIRMQUEUE_H__
+#ifndef __LORA_MAC_CONFIRMQUEUE_H__
+#define __LORA_MAC_CONFIRMQUEUE_H__
 
 #ifdef __cplusplus
 extern "C"
@@ -47,10 +47,10 @@ extern "C"
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "LoRaMac.h"
+#include "LoRa_Mac.h"
 
 /*!
- * LoRaMac MLME-Confirm queue length
+ * LoRa_Mac MLME-Confirm queue length
  */
 #define LORA_MAC_MLME_CONFIRM_QUEUE_LEN             5
 
@@ -66,14 +66,14 @@ typedef struct sMlmeConfirmQueue
     /*!
      * Status of the operation
      */
-    LoRaMacEventInfoStatus_t Status;
+    LoRa_MacEventInfoStatus_t Status;
     /*!
      * Set to true, if the request is ready to be handled
      */
     bool ReadyToHandle;
     /*!
      * Set to true, if it is not permitted to set the ReadyToHandle variable
-     * with a function call to LoRaMacConfirmQueueSetStatusCmn.
+     * with a function call to LoRa_MacConfirmQueueSetStatusCmn.
      */
     bool RestrictCommonReadyToHandle;
 }MlmeConfirmQueue_t;
@@ -82,17 +82,17 @@ typedef struct sMlmeConfirmQueue
  * Signature of callback function to be called by this module when the
  * non-volatile needs to be saved.
  */
-typedef void ( *LoRaMacConfirmQueueNvmEvent )( void );
+typedef void ( *LoRa_MacConfirmQueueNvmEvent )( void );
 
 /*!
  * \brief   Initializes the confirm queue
  *
- * \param   [IN] primitives - Pointer to the LoRaMac primitives.
+ * \param   [IN] primitives - Pointer to the LoRa_Mac primitives.
  *
  * \param   [IN] confirmQueueNvmCtxChanged - Callback function which will be called when the
  *                                           non-volatile context needs to be saved.
  */
-void LoRaMacConfirmQueueInit( LoRaMacPrimitives_t* primitives, LoRaMacConfirmQueueNvmEvent confirmQueueNvmCtxChanged  );
+void LoRa_MacConfirmQueueInit( LoRa_MacPrimitives_t* primitives, LoRa_MacConfirmQueueNvmEvent confirmQueueNvmCtxChanged  );
 
 /*!
  * Restores the internal non-volatile context from passed pointer.
@@ -101,7 +101,7 @@ void LoRaMacConfirmQueueInit( LoRaMacPrimitives_t* primitives, LoRaMacConfirmQue
  *
  * \retval  [true - operation was successful, false - operation failed]
  */
-bool LoRaMacConfirmQueueRestoreNvmCtx( void* confirmQueueNvmCtx );
+bool LoRa_MacConfirmQueueRestoreNvmCtx( void* confirmQueueNvmCtx );
 
 /*!
  * Returns a pointer to the internal non-volatile context.
@@ -110,7 +110,7 @@ bool LoRaMacConfirmQueueRestoreNvmCtx( void* confirmQueueNvmCtx );
  *
  * \retval  - Points to a structure where the module store its non-volatile context
  */
-void* LoRaMacConfirmQueueGetNvmCtx( size_t* confirmQueueNvmCtxSize );
+void* LoRa_MacConfirmQueueGetNvmCtx( size_t* confirmQueueNvmCtxSize );
 
 /*!
  * \brief   Adds an element to the confirm queue.
@@ -119,21 +119,21 @@ void* LoRaMacConfirmQueueGetNvmCtx( size_t* confirmQueueNvmCtxSize );
  *
  * \retval  [true - operation was successful, false - operation failed]
  */
-bool LoRaMacConfirmQueueAdd( MlmeConfirmQueue_t* mlmeConfirm );
+bool LoRa_MacConfirmQueueAdd( MlmeConfirmQueue_t* mlmeConfirm );
 
 /*!
  * \brief   Removes the last element which was added into the queue.
  *
  * \retval  [true - operation was successful, false - operation failed]
  */
-bool LoRaMacConfirmQueueRemoveLast( void );
+bool LoRa_MacConfirmQueueRemoveLast( void );
 
 /*!
  * \brief   Removes the first element which was added to the confirm queue.
  *
  * \retval  [true - operation was successful, false - operation failed]
  */
-bool LoRaMacConfirmQueueRemoveFirst( void );
+bool LoRa_MacConfirmQueueRemoveFirst( void );
 
 /*!
  * \brief   Sets the status of an element.
@@ -142,7 +142,7 @@ bool LoRaMacConfirmQueueRemoveFirst( void );
  *
  * \param   [IN] request - The related request to set the status.
  */
-void LoRaMacConfirmQueueSetStatus( LoRaMacEventInfoStatus_t status, Mlme_t request );
+void LoRa_MacConfirmQueueSetStatus( LoRa_MacEventInfoStatus_t status, Mlme_t request );
 
 /*!
  * \brief   Gets the status of an element.
@@ -151,21 +151,21 @@ void LoRaMacConfirmQueueSetStatus( LoRaMacEventInfoStatus_t status, Mlme_t reque
  *
  * \retval  The status of the related MlmeRequest.
  */
-LoRaMacEventInfoStatus_t LoRaMacConfirmQueueGetStatus( Mlme_t request );
+LoRa_MacEventInfoStatus_t LoRa_MacConfirmQueueGetStatus( Mlme_t request );
 
 /*!
  * \brief   Sets a common status for all elements in the queue.
  *
  * \param   [IN] status - The status to set.
  */
-void LoRaMacConfirmQueueSetStatusCmn( LoRaMacEventInfoStatus_t status );
+void LoRa_MacConfirmQueueSetStatusCmn( LoRa_MacEventInfoStatus_t status );
 
 /*!
  * \brief   Gets the common status of all elements.
  *
  * \retval  The common status of all elements.
  */
-LoRaMacEventInfoStatus_t LoRaMacConfirmQueueGetStatusCmn( void );
+LoRa_MacEventInfoStatus_t LoRa_MacConfirmQueueGetStatusCmn( void );
 
 /*!
  * \brief   Verifies if a request is in the queue and active.
@@ -174,31 +174,31 @@ LoRaMacEventInfoStatus_t LoRaMacConfirmQueueGetStatusCmn( void );
  *
  * \retval  [true - element is in the queue, false - element is not in the queue].
  */
-bool LoRaMacConfirmQueueIsCmdActive( Mlme_t request );
+bool LoRa_MacConfirmQueueIsCmdActive( Mlme_t request );
 
 /*!
  * \brief   Handles all callbacks of active requests
  *
  * \param   [IN] mlmeConfirm - Pointer to the generic mlmeConfirm structure.
  */
-void LoRaMacConfirmQueueHandleCb( MlmeConfirm_t* mlmeConfirm );
+void LoRa_MacConfirmQueueHandleCb( MlmeConfirm_t* mlmeConfirm );
 
 /*!
  * \brief   Query number of elements in the queue.
  *
  * \retval  Number of elements.
  */
-uint8_t LoRaMacConfirmQueueGetCnt( void );
+uint8_t LoRa_MacConfirmQueueGetCnt( void );
 
 /*!
  * \brief   Verify if the confirm queue is full.
  *
  * \retval  [true - queue is full, false - queue is not full].
  */
-bool LoRaMacConfirmQueueIsFull( void );
+bool LoRa_MacConfirmQueueIsFull( void );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __LORAMAC_CONFIRMQUEUE_H__
+#endif // __LORA_MAC_CONFIRMQUEUE_H__

@@ -1,5 +1,5 @@
 /*!
- * \file      LoRaMacTest.h
+ * \file      LoRa_MacTest.h
  *
  * \brief     LoRa MAC layer test function implementation
  *
@@ -28,13 +28,13 @@
  *
  * \author    Daniel Jaeckle ( STACKFORCE )
  *
- * \defgroup  LORAMACTEST LoRa MAC layer test function implementation
+ * \defgroup  LORA_MACTEST LoRa MAC layer test function implementation
  *            This module specifies the API implementation of test function of the LoRaMAC layer.
  *            The functions in this file are only for testing purposes only.
  * \{
  */
-#ifndef __LORAMACTEST_H__
-#define __LORAMACTEST_H__
+#ifndef __LORA_MACTEST_H__
+#define __LORA_MACTEST_H__
 
 #ifdef __cplusplus
 extern "C"
@@ -45,16 +45,16 @@ extern "C"
  * \brief   Enabled or disables the duty cycle
  *
  * \details This is a test function. It shall be used for testing purposes only.
- *          Changing this attribute may lead to a non-conformance LoRaMac operation.
+ *          Changing this attribute may lead to a non-conformance LoRa_Mac operation.
  *
  * \param   [IN] enable - Enabled or disables the duty cycle
  */
-void LoRaMacTestSetDutyCycleOn( bool enable );
+void LoRa_MacTestSetDutyCycleOn( bool enable );
 
-/*! \} defgroup LORAMACTEST */
+/*! \} defgroup LORA_MACTEST */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __LORAMACTEST_H__
+#endif // __LORA_MACTEST_H__

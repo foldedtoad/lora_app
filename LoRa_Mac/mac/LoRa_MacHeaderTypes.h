@@ -1,5 +1,5 @@
 /*!
- * \file      LoRaMacHeaderTypes.h
+ * \file      LoRa_MacHeaderTypes.h
  *
  * \brief     LoRa MAC layer header type definitions
  *
@@ -30,12 +30,12 @@
  *
  * \author    Johannes Bruder ( STACKFORCE )
  *
- * addtogroup LORAMAC
+ * addtogroup LORA_MAC
  * \{
  *
  */
-#ifndef __LORAMAC_HEADER_TYPES_H__
-#define __LORAMAC_HEADER_TYPES_H__
+#ifndef __LORA_MAC_HEADER_TYPES_H__
+#define __LORA_MAC_HEADER_TYPES_H__
 
 #ifdef __cplusplus
 extern "C"
@@ -45,19 +45,19 @@ extern "C"
 #include <stdint.h>
 
 /*! Frame header (FHDR) maximum field size */
-#define LORAMAC_FHDR_MAX_FIELD_SIZE            22
+#define LORA_MAC_FHDR_MAX_FIELD_SIZE            22
 
 /*! FHDR Device address field size */
-#define LORAMAC_FHDR_DEV_ADD_FIELD_SIZE         4
+#define LORA_MAC_FHDR_DEV_ADD_FIELD_SIZE         4
 
 /*! FHDR Frame control field size */
-#define LORAMAC_FHDR_F_CTRL_FIELD_SIZE          1
+#define LORA_MAC_FHDR_F_CTRL_FIELD_SIZE          1
 
 /*! FHDR Frame control field size */
-#define LORAMAC_FHDR_F_CNT_FIELD_SIZE           2
+#define LORA_MAC_FHDR_F_CNT_FIELD_SIZE           2
 
 /*! FOpts maximum field size */
-#define LORAMAC_FHDR_F_OPTS_MAX_FIELD_SIZE          15
+#define LORA_MAC_FHDR_F_OPTS_MAX_FIELD_SIZE          15
 
 
 /*!
@@ -65,7 +65,7 @@ extern "C"
  *
  * LoRaWAN Specification V1.0.2, chapter 5.4
  */
-typedef union uLoRaMacDLSettings
+typedef union uLoRa_MacDLSettings
 {
     /*!
      * Byte-access to the bits
@@ -89,14 +89,14 @@ typedef union uLoRaMacDLSettings
          */
         uint8_t OptNeg          : 1;
     }Bits;
-}LoRaMacDLSettings_t;
+}LoRa_MacDLSettings_t;
 
 /*!
  * LoRaMAC header field definition (MHDR field)
  *
  * LoRaWAN Specification V1.0.2, chapter 4.2
  */
-typedef union uLoRaMacHeader
+typedef union uLoRa_MacHeader
 {
     /*!
      * Byte-access to the bits
@@ -120,14 +120,14 @@ typedef union uLoRaMacHeader
          */
         uint8_t MType           : 3;
     }Bits;
-}LoRaMacHeader_t;
+}LoRa_MacHeader_t;
 
 /*!
  * LoRaMAC frame control field definition (FCtrl)
  *
  * LoRaWAN Specification V1.0.2, chapter 4.3.1
  */
-typedef union uLoRaMacFrameCtrl
+typedef union uLoRa_MacFrameCtrl
 {
     /*!
      * Byte-access to the bits
@@ -159,14 +159,14 @@ typedef union uLoRaMacFrameCtrl
          */
         uint8_t Adr             : 1;
     }Bits;
-}LoRaMacFrameCtrl_t;
+}LoRa_MacFrameCtrl_t;
 
 /*!
- * LoRaMac Frame header (FHDR)
+ * LoRa_Mac Frame header (FHDR)
  *
  * LoRaWAN Specification V1.0.2, chapter 4.3.1
  */
-typedef struct sLoRaMacFrameHeader
+typedef struct sLoRa_MacFrameHeader
 {
     /*!
      * Device address
@@ -175,7 +175,7 @@ typedef struct sLoRaMacFrameHeader
     /*!
      * Frame control field
      */
-    LoRaMacFrameCtrl_t FCtrl;
+    LoRa_MacFrameCtrl_t FCtrl;
     /*!
      * Frame counter
      */
@@ -183,13 +183,13 @@ typedef struct sLoRaMacFrameHeader
     /*!
      * FOpts field may transport  MAC commands (opt. 0-15 Bytes)
      */
-    uint8_t FOpts[LORAMAC_FHDR_F_OPTS_MAX_FIELD_SIZE];
-}LoRaMacFrameHeader_t;
+    uint8_t FOpts[LORA_MAC_FHDR_F_OPTS_MAX_FIELD_SIZE];
+}LoRa_MacFrameHeader_t;
 
-/*! \} addtogroup LORAMAC */
+/*! \} addtogroup LORA_MAC */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __LORAMAC_HEADER_TYPES_H__
+#endif // __LORA_MAC_HEADER_TYPES_H__

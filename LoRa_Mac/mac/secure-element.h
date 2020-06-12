@@ -44,7 +44,7 @@ extern "C"
 #endif
 
 #include <stdint.h>
-#include "LoRaMacCrypto.h"
+#include "LoRa_MacCrypto.h"
 
 #define SE_EUI_SIZE             16
 

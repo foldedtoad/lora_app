@@ -1,5 +1,5 @@
 /*!
- * \file      LoRaMac.h
+ * \file      LoRa_Mac.h
  *
  * \brief     LoRa MAC layer implementation
  *
@@ -30,9 +30,9 @@
  *
  * \author    Johannes Bruder ( STACKFORCE )
  *
- * \defgroup  LORAMAC LoRa MAC layer implementation
+ * \defgroup  LORA_MAC LoRa MAC layer implementation
  *            This module specifies the API implementation of the LoRaMAC layer.
- *            This is a placeholder for a detailed description of the LoRaMac
+ *            This is a placeholder for a detailed description of the LoRa_Mac
  *            layer and the supported features.
  * \{
  *
@@ -118,8 +118,8 @@
  *            LoRaWAN class C application example for the SKiM980A.
  *
  */
-#ifndef __LORAMAC_H__
-#define __LORAMAC_H__
+#ifndef __LORA_MAC_H__
+#define __LORA_MAC_H__
 
 #ifdef __cplusplus
 extern "C"
@@ -128,12 +128,11 @@ extern "C"
 
 #include <stdint.h>
 #include <stdbool.h>
-
 #include "utilities.h"
 #include "timer.h"
 #include "systime.h"
 #include "radio.h"
-#include "LoRaMacTypes.h"
+#include "LoRa_MacTypes.h"
 
 /*!
  * Maximum number of times the MAC layer tries to get an acknowledge.
@@ -154,10 +153,10 @@ extern "C"
  * Sets the length of the LoRaMAC footer field.
  * Mainly indicates the MIC field length
  */
-#define LORAMAC_MFR_LEN                             4
+#define LORA_MAC_MFR_LEN                             4
 
 /*!
- * LoRaMac MLME-Confirm queue length
+ * LoRa_Mac MLME-Confirm queue length
  */
 #define LORA_MAC_MLME_CONFIRM_QUEUE_LEN             5
 
@@ -171,12 +170,12 @@ extern "C"
 /*!
  * Maximum number of multicast context
  */
-#define   LORAMAC_MAX_MC_CTX       4
+#define   LORA_MAC_MAX_MC_CTX       4
 
 /*!
  * Start value for multicast keys enumeration
  */
-#define LORAMAC_CRYPTO_MULTICAST_KEYS   127
+#define LORA_MAC_CRYPTO_MULTICAST_KEYS   127
 
 /*!
  * End-Device activation type
@@ -275,7 +274,7 @@ typedef struct sRxChannelParams
 /*!
  * LoRaMAC receive window enumeration
  */
-typedef enum eLoRaMacRxSlot
+typedef enum eLoRa_MacRxSlot
 {
     /*!
      * LoRaMAC receive window 1
@@ -305,12 +304,12 @@ typedef enum eLoRaMacRxSlot
      * LoRaMAC no active receive window
      */
     RX_SLOT_NONE,
-}LoRaMacRxSlot_t;
+}LoRa_MacRxSlot_t;
 
 /*!
  * LoRaMAC structure to hold internal context pointers and its lengths
  */
-typedef struct sLoRaMacCtxs
+typedef struct sLoRa_MacCtxs
 {
     /*!
      * \brief   Pointer to Mac context
@@ -368,12 +367,12 @@ typedef struct sLoRaMacCtxs
      * \brief   Size of MLME Confirm queue module context
      */
     size_t ConfirmQueueNvmCtxSize;
-}LoRaMacCtxs_t;
+}LoRa_MacCtxs_t;
 
 /*!
  * Global MAC layer parameters
  */
-typedef struct sLoRaMacParams
+typedef struct sLoRa_MacParams
 {
     /*!
      * Channels TX power
@@ -395,7 +394,7 @@ typedef struct sLoRaMacParams
      */
     uint8_t MinRxSymbols;
     /*!
-     * LoRaMac maximum time a reception window stays open
+     * LoRa_Mac maximum time a reception window stays open
      */
     uint32_t MaxRxWindow;
     /*!
@@ -450,7 +449,7 @@ typedef struct sLoRaMacParams
      * Indicates if the node supports repeaters
      */
     bool RepeaterSupport;
-}LoRaMacParams_t;
+}LoRa_MacParams_t;
 
 /*!
  * LoRaMAC data structure for a PingSlotInfoReq \ref MLME_PING_SLOT_INFO
@@ -528,85 +527,85 @@ typedef struct sBeaconInfo
 /*!
  * Enumeration containing the status of the operation of a MAC service
  */
-typedef enum eLoRaMacEventInfoStatus
+typedef enum eLoRa_MacEventInfoStatus
 {
     /*!
      * Service performed successfully
      */
-    LORAMAC_EVENT_INFO_STATUS_OK = 0,
+    LORA_MAC_EVENT_INFO_STATUS_OK = 0,
     /*!
      * An error occurred during the execution of the service
      */
-    LORAMAC_EVENT_INFO_STATUS_ERROR,
+    LORA_MAC_EVENT_INFO_STATUS_ERROR,
     /*!
      * A Tx timeout occurred
      */
-    LORAMAC_EVENT_INFO_STATUS_TX_TIMEOUT,
+    LORA_MAC_EVENT_INFO_STATUS_TX_TIMEOUT,
     /*!
      * An Rx timeout occurred on receive window 1
      */
-    LORAMAC_EVENT_INFO_STATUS_RX1_TIMEOUT,
+    LORA_MAC_EVENT_INFO_STATUS_RX1_TIMEOUT,
     /*!
      * An Rx timeout occurred on receive window 2
      */
-    LORAMAC_EVENT_INFO_STATUS_RX2_TIMEOUT,
+    LORA_MAC_EVENT_INFO_STATUS_RX2_TIMEOUT,
     /*!
      * An Rx error occurred on receive window 1
      */
-    LORAMAC_EVENT_INFO_STATUS_RX1_ERROR,
+    LORA_MAC_EVENT_INFO_STATUS_RX1_ERROR,
     /*!
      * An Rx error occurred on receive window 2
      */
-    LORAMAC_EVENT_INFO_STATUS_RX2_ERROR,
+    LORA_MAC_EVENT_INFO_STATUS_RX2_ERROR,
     /*!
      * An error occurred in the join procedure
      */
-    LORAMAC_EVENT_INFO_STATUS_JOIN_FAIL,
+    LORA_MAC_EVENT_INFO_STATUS_JOIN_FAIL,
     /*!
      * A frame with an invalid downlink counter was received. The
      * downlink counter of the frame was equal to the local copy
      * of the downlink counter of the node.
      */
-    LORAMAC_EVENT_INFO_STATUS_DOWNLINK_REPEATED,
+    LORA_MAC_EVENT_INFO_STATUS_DOWNLINK_REPEATED,
     /*!
      * The MAC could not retransmit a frame since the MAC decreased the datarate. The
      * payload size is not applicable for the datarate.
      */
-    LORAMAC_EVENT_INFO_STATUS_TX_DR_PAYLOAD_SIZE_ERROR,
+    LORA_MAC_EVENT_INFO_STATUS_TX_DR_PAYLOAD_SIZE_ERROR,
     /*!
      * The node has lost MAX_FCNT_GAP or more frames.
      */
-    LORAMAC_EVENT_INFO_STATUS_DOWNLINK_TOO_MANY_FRAMES_LOSS,
+    LORA_MAC_EVENT_INFO_STATUS_DOWNLINK_TOO_MANY_FRAMES_LOSS,
     /*!
      * An address error occurred
      */
-    LORAMAC_EVENT_INFO_STATUS_ADDRESS_FAIL,
+    LORA_MAC_EVENT_INFO_STATUS_ADDRESS_FAIL,
     /*!
      * Message integrity check failure
      */
-    LORAMAC_EVENT_INFO_STATUS_MIC_FAIL,
+    LORA_MAC_EVENT_INFO_STATUS_MIC_FAIL,
     /*!
      * ToDo
      */
-    LORAMAC_EVENT_INFO_STATUS_MULTICAST_FAIL,
+    LORA_MAC_EVENT_INFO_STATUS_MULTICAST_FAIL,
     /*!
      * ToDo
      */
-    LORAMAC_EVENT_INFO_STATUS_BEACON_LOCKED,
+    LORA_MAC_EVENT_INFO_STATUS_BEACON_LOCKED,
     /*!
      * ToDo
      */
-    LORAMAC_EVENT_INFO_STATUS_BEACON_LOST,
+    LORA_MAC_EVENT_INFO_STATUS_BEACON_LOST,
     /*!
      * ToDo
      */
-    LORAMAC_EVENT_INFO_STATUS_BEACON_NOT_FOUND,
-}LoRaMacEventInfoStatus_t;
+    LORA_MAC_EVENT_INFO_STATUS_BEACON_NOT_FOUND,
+}LoRa_MacEventInfoStatus_t;
 
 /*!
- * LoRaMac tx/rx operation state
+ * LoRa_Mac tx/rx operation state
  */
-typedef union eLoRaMacFlags_t
+typedef union eLoRa_MacFlags_t
 {
     /*!
      * Byte-access to the bits
@@ -642,7 +641,7 @@ typedef union eLoRaMacFlags_t
          */
         uint8_t MacDone                 : 1;
     }Bits;
-}LoRaMacFlags_t;
+}LoRa_MacFlags_t;
 
 /*!
  *
@@ -663,9 +662,9 @@ typedef union eLoRaMacFlags_t
  *
  * Primitive        | Function
  * ---------------- | :---------------------:
- * MCPS-Request     | \ref LoRaMacMlmeRequest
- * MCPS-Confirm     | MacMcpsConfirm in \ref LoRaMacPrimitives_t
- * MCPS-Indication  | MacMcpsIndication in \ref LoRaMacPrimitives_t
+ * MCPS-Request     | \ref LoRa_MacMlmeRequest
+ * MCPS-Confirm     | MacMcpsConfirm in \ref LoRa_MacPrimitives_t
+ * MCPS-Indication  | MacMcpsIndication in \ref LoRa_MacPrimitives_t
  */
 typedef enum eMcps
 {
@@ -821,7 +820,7 @@ typedef struct sMcpsConfirm
     /*!
      * Status of the operation
      */
-    LoRaMacEventInfoStatus_t Status;
+    LoRa_MacEventInfoStatus_t Status;
     /*!
      * Uplink datarate
      */
@@ -864,7 +863,7 @@ typedef struct sMcpsIndication
     /*!
      * Status of the operation
      */
-    LoRaMacEventInfoStatus_t Status;
+    LoRa_MacEventInfoStatus_t Status;
     /*!
      * Multicast
      */
@@ -904,7 +903,7 @@ typedef struct sMcpsIndication
     /*!
      * Receive window
      */
-    LoRaMacRxSlot_t RxSlot;
+    LoRa_MacRxSlot_t RxSlot;
     /*!
      * Set if an acknowledgement was received
      */
@@ -943,9 +942,9 @@ typedef struct sMcpsIndication
  *
  * Primitive        | Function
  * ---------------- | :---------------------:
- * MLME-Request     | \ref LoRaMacMlmeRequest
- * MLME-Confirm     | MacMlmeConfirm in \ref LoRaMacPrimitives_t
- * MLME-Indication  | MacMlmeIndication in \ref LoRaMacPrimitives_t
+ * MLME-Request     | \ref LoRa_MacMlmeRequest
+ * MLME-Confirm     | MacMlmeConfirm in \ref LoRa_MacPrimitives_t
+ * MLME-Indication  | MacMlmeIndication in \ref LoRa_MacPrimitives_t
  */
 typedef enum eMlme
 {
@@ -1158,7 +1157,7 @@ typedef struct sMlmeConfirm
     /*!
      * Status of the operation
      */
-    LoRaMacEventInfoStatus_t Status;
+    LoRa_MacEventInfoStatus_t Status;
     /*!
      * The transmission time on air of the frame
      */
@@ -1199,10 +1198,10 @@ typedef struct sMlmeIndication
     /*!
      * Status of the operation
      */
-    LoRaMacEventInfoStatus_t Status;
+    LoRa_MacEventInfoStatus_t Status;
     /*!
      * Beacon information. Only valid for \ref MLME_BEACON,
-     * status \ref LORAMAC_EVENT_INFO_STATUS_BEACON_LOCKED
+     * status \ref LORA_MAC_EVENT_INFO_STATUS_BEACON_LOCKED
      */
     BeaconInfo_t BeaconInfo;
 }MlmeIndication_t;
@@ -1286,8 +1285,8 @@ typedef struct sMlmeIndication
  *
  * Primitive        | Function
  * ---------------- | :---------------------:
- * MIB-Set          | \ref LoRaMacMibSetRequestConfirm
- * MIB-Get          | \ref LoRaMacMibGetRequestConfirm
+ * MIB-Set          | \ref LoRa_MacMibSetRequestConfirm
+ * MIB-Get          | \ref LoRa_MacMibGetRequestConfirm
  */
 typedef enum eMib
 {
@@ -2024,7 +2023,7 @@ typedef union uMibParam
      *
      * Related MIB type: \ref MIB_NVM_CTXS
      */
-    LoRaMacCtxs_t* Contexts;
+    LoRa_MacCtxs_t* Contexts;
     /*
      * LoRaWAN MAC layer operating version when activated by ABP.
      *
@@ -2132,7 +2131,7 @@ typedef struct eMibRequestConfirm
 /*!
  * LoRaMAC tx information
  */
-typedef struct sLoRaMacTxInfo
+typedef struct sLoRa_MacTxInfo
 {
     /*!
      * Size of the application data payload which can be transmitted.
@@ -2143,201 +2142,201 @@ typedef struct sLoRaMacTxInfo
      * which is dependent on the current datarate.
      */
     uint8_t CurrentPossiblePayloadSize;
-}LoRaMacTxInfo_t;
+}LoRa_MacTxInfo_t;
 
 /*!
  * LoRaMAC Status
  */
-typedef enum eLoRaMacStatus
+typedef enum eLoRa_MacStatus
 {
     /*!
      * Service started successfully
      */
-    LORAMAC_STATUS_OK,
+    LORA_MAC_STATUS_OK,
     /*!
      * Service not started - LoRaMAC is busy
      */
-    LORAMAC_STATUS_BUSY,
+    LORA_MAC_STATUS_BUSY,
     /*!
      * Service unknown
      */
-    LORAMAC_STATUS_SERVICE_UNKNOWN,
+    LORA_MAC_STATUS_SERVICE_UNKNOWN,
     /*!
      * Service not started - invalid parameter
      */
-    LORAMAC_STATUS_PARAMETER_INVALID,
+    LORA_MAC_STATUS_PARAMETER_INVALID,
     /*!
      * Service not started - invalid frequency
      */
-    LORAMAC_STATUS_FREQUENCY_INVALID,
+    LORA_MAC_STATUS_FREQUENCY_INVALID,
     /*!
      * Service not started - invalid datarate
      */
-    LORAMAC_STATUS_DATARATE_INVALID,
+    LORA_MAC_STATUS_DATARATE_INVALID,
     /*!
      * Service not started - invalid frequency and datarate
      */
-    LORAMAC_STATUS_FREQ_AND_DR_INVALID,
+    LORA_MAC_STATUS_FREQ_AND_DR_INVALID,
     /*!
      * Service not started - the device is not in a LoRaWAN
      */
-    LORAMAC_STATUS_NO_NETWORK_JOINED,
+    LORA_MAC_STATUS_NO_NETWORK_JOINED,
     /*!
      * Service not started - payload length error
      */
-    LORAMAC_STATUS_LENGTH_ERROR,
+    LORA_MAC_STATUS_LENGTH_ERROR,
     /*!
      * Service not started - the specified region is not supported
      * or not activated with preprocessor definitions.
      */
-    LORAMAC_STATUS_REGION_NOT_SUPPORTED,
+    LORA_MAC_STATUS_REGION_NOT_SUPPORTED,
     /*!
      * The application data was not transmitted
      * because prioritized pending MAC commands had to be sent.
      */
-    LORAMAC_STATUS_SKIPPED_APP_DATA,
+    LORA_MAC_STATUS_SKIPPED_APP_DATA,
     /*!
      * ToDo
      */
-    LORAMAC_STATUS_DUTYCYCLE_RESTRICTED,
+    LORA_MAC_STATUS_DUTYCYCLE_RESTRICTED,
     /*!
      *
      */
-    LORAMAC_STATUS_NO_CHANNEL_FOUND,
+    LORA_MAC_STATUS_NO_CHANNEL_FOUND,
     /*!
      *
      */
-    LORAMAC_STATUS_NO_FREE_CHANNEL_FOUND,
+    LORA_MAC_STATUS_NO_FREE_CHANNEL_FOUND,
      /*!
       * ToDo
       */
-    LORAMAC_STATUS_BUSY_BEACON_RESERVED_TIME,
+    LORA_MAC_STATUS_BUSY_BEACON_RESERVED_TIME,
      /*!
       * ToDo
       */
-    LORAMAC_STATUS_BUSY_PING_SLOT_WINDOW_TIME,
+    LORA_MAC_STATUS_BUSY_PING_SLOT_WINDOW_TIME,
      /*!
       * ToDo
       */
-    LORAMAC_STATUS_BUSY_UPLINK_COLLISION,
+    LORA_MAC_STATUS_BUSY_UPLINK_COLLISION,
     /*!
      * An error in the cryptographic module is occurred
      */
-    LORAMAC_STATUS_CRYPTO_ERROR,
+    LORA_MAC_STATUS_CRYPTO_ERROR,
     /*!
      * An error in the frame counter handler module is occurred
      */
-    LORAMAC_STATUS_FCNT_HANDLER_ERROR,
+    LORA_MAC_STATUS_FCNT_HANDLER_ERROR,
     /*!
      * An error in the MAC command module is occurred
      */
-    LORAMAC_STATUS_MAC_COMMAD_ERROR,
+    LORA_MAC_STATUS_MAC_COMMAD_ERROR,
     /*!
      * An error in the Class B module is occurred
      */
-    LORAMAC_STATUS_CLASS_B_ERROR,
+    LORA_MAC_STATUS_CLASS_B_ERROR,
     /*!
      * An error in the Confirm Queue module is occurred
      */
-    LORAMAC_STATUS_CONFIRM_QUEUE_ERROR,
+    LORA_MAC_STATUS_CONFIRM_QUEUE_ERROR,
     /*!
      * The multicast group doesn't exist
      */
-    LORAMAC_STATUS_MC_GROUP_UNDEFINED,
+    LORA_MAC_STATUS_MC_GROUP_UNDEFINED,
     /*!
      * Undefined error occurred
      */
-    LORAMAC_STATUS_ERROR
-}LoRaMacStatus_t;
+    LORA_MAC_STATUS_ERROR
+}LoRa_MacStatus_t;
 
 /*!
  * LoRaMAC region enumeration
  */
-typedef enum eLoRaMacRegion_t
+typedef enum eLoRa_MacRegion_t
 {
     /*!
      * AS band on 923MHz
      */
-    LORAMAC_REGION_AS923,
+    LORA_MAC_REGION_AS923,
     /*!
      * Australian band on 915MHz
      */
-    LORAMAC_REGION_AU915,
+    LORA_MAC_REGION_AU915,
     /*!
      * Chinese band on 470MHz
      */
-    LORAMAC_REGION_CN470,
+    LORA_MAC_REGION_CN470,
     /*!
      * Chinese band on 779MHz
      */
-    LORAMAC_REGION_CN779,
+    LORA_MAC_REGION_CN779,
     /*!
      * European band on 433MHz
      */
-    LORAMAC_REGION_EU433,
+    LORA_MAC_REGION_EU433,
     /*!
      * European band on 868MHz
      */
-    LORAMAC_REGION_EU868,
+    LORA_MAC_REGION_EU868,
     /*!
      * South korean band on 920MHz
      */
-    LORAMAC_REGION_KR920,
+    LORA_MAC_REGION_KR920,
     /*!
      * India band on 865MHz
      */
-    LORAMAC_REGION_IN865,
+    LORA_MAC_REGION_IN865,
     /*!
      * North american band on 915MHz
      */
-    LORAMAC_REGION_US915,
+    LORA_MAC_REGION_US915,
     /*!
      * Russia band on 864MHz
      */
-    LORAMAC_REGION_RU864,
-}LoRaMacRegion_t;
+    LORA_MAC_REGION_RU864,
+}LoRa_MacRegion_t;
 
 /*!
  * Enumeration of modules which have a context
  */
-typedef enum LoRaMacNvmCtxModule_e
+typedef enum LoRa_MacNvmCtxModule_e
 {
     /*!
      * Context for the MAC
      */
-    LORAMAC_NVMCTXMODULE_MAC,
+    LORA_MAC_NVMCTXMODULE_MAC,
     /*!
      * Context for the regions
      */
-    LORAMAC_NVMCTXMODULE_REGION,
+    LORA_MAC_NVMCTXMODULE_REGION,
     /*!
      * Context for the crypto module
      */
-    LORAMAC_NVMCTXMODULE_CRYPTO,
+    LORA_MAC_NVMCTXMODULE_CRYPTO,
     /*!
      * Context for the secure element
      */
-    LORAMAC_NVMCTXMODULE_SECURE_ELEMENT,
+    LORA_MAC_NVMCTXMODULE_SECURE_ELEMENT,
     /*!
      * Context for the command queue
      */
-    LORAMAC_NVMCTXMODULE_COMMANDS,
+    LORA_MAC_NVMCTXMODULE_COMMANDS,
     /*!
      * Context for class b
      */
-    LORAMAC_NVMCTXMODULE_CLASS_B,
+    LORA_MAC_NVMCTXMODULE_CLASS_B,
     /*!
      * Context for the confirm queue
      */
-    LORAMAC_NVMCTXMODULE_CONFIRM_QUEUE,
-}LoRaMacNvmCtxModule_t;
+    LORA_MAC_NVMCTXMODULE_CONFIRM_QUEUE,
+}LoRa_MacNvmCtxModule_t;
 
 
 /*!
  * LoRaMAC events structure
  * Used to notify upper layers of MAC events
  */
-typedef struct sLoRaMacPrimitives
+typedef struct sLoRa_MacPrimitives
 {
     /*!
      * \brief   MCPS-Confirm primitive
@@ -2363,12 +2362,12 @@ typedef struct sLoRaMacPrimitives
      * \param   [OUT] MLME-Indication parameters
      */
     void ( *MacMlmeIndication )( MlmeIndication_t* MlmeIndication );
-}LoRaMacPrimitives_t;
+}LoRa_MacPrimitives_t;
 
 /*!
  * LoRaMAC callback structure
  */
-typedef struct sLoRaMacCallback
+typedef struct sLoRa_MacCallback
 {
     /*!
      * \brief   Measures the battery level
@@ -2390,7 +2389,7 @@ typedef struct sLoRaMacCallback
      *
      * \param   Context that changed
      */
-    void ( *NvmContextChange )( LoRaMacNvmCtxModule_t module );
+    void ( *NvmContextChange )( LoRa_MacNvmCtxModule_t module );
     /*!
      *\brief    Will be called each time a Radio IRQ is handled by the MAC
      *          layer.
@@ -2398,69 +2397,69 @@ typedef struct sLoRaMacCallback
      *\warning  Runs in a IRQ context. Should only change variables state.
      */
     void ( *MacProcessNotify )( void );
-}LoRaMacCallback_t;
+}LoRa_MacCallback_t;
 
 
 /*!
  * LoRaMAC Max EIRP (dBm) table
  */
-static const uint8_t LoRaMacMaxEirpTable[] = { 8, 10, 12, 13, 14, 16, 18, 20, 21, 24, 26, 27, 29, 30, 33, 36 };
+static const uint8_t LoRa_MacMaxEirpTable[] = { 8, 10, 12, 13, 14, 16, 18, 20, 21, 24, 26, 27, 29, 30, 33, 36 };
 
 /*!
  * \brief   LoRaMAC layer initialization
  *
  * \details In addition to the initialization of the LoRaMAC layer, this
  *          function initializes the callback primitives of the MCPS and
- *          MLME services. Every data field of \ref LoRaMacPrimitives_t must be
+ *          MLME services. Every data field of \ref LoRa_MacPrimitives_t must be
  *          set to a valid callback function.
  *
  * \param   [IN] primitives - Pointer to a structure defining the LoRaMAC
- *                            event functions. Refer to \ref LoRaMacPrimitives_t.
+ *                            event functions. Refer to \ref LoRa_MacPrimitives_t.
  *
  * \param   [IN] callbacks  - Pointer to a structure defining the LoRaMAC
- *                            callback functions. Refer to \ref LoRaMacCallback_t.
+ *                            callback functions. Refer to \ref LoRa_MacCallback_t.
  *
  * \param   [IN] region     - The region to start.
  *
- * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
+ * \retval  LoRa_MacStatus_t Status of the operation. Possible returns are:
  *          returns are:
- *          \ref LORAMAC_STATUS_OK,
- *          \ref LORAMAC_STATUS_PARAMETER_INVALID,
- *          \ref LORAMAC_STATUS_REGION_NOT_SUPPORTED.
+ *          \ref LORA_MAC_STATUS_OK,
+ *          \ref LORA_MAC_STATUS_PARAMETER_INVALID,
+ *          \ref LORA_MAC_STATUS_REGION_NOT_SUPPORTED.
  */
-LoRaMacStatus_t LoRaMacInitialization( LoRaMacPrimitives_t* primitives, LoRaMacCallback_t* callbacks, LoRaMacRegion_t region );
+LoRa_MacStatus_t LoRa_MacInitialization( LoRa_MacPrimitives_t* primitives, LoRa_MacCallback_t* callbacks, LoRa_MacRegion_t region );
 
 /*!
  * \brief   Starts LoRaMAC layer
  *
- * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
+ * \retval  LoRa_MacStatus_t Status of the operation. Possible returns are:
  *          returns are:
- *          \ref LORAMAC_STATUS_OK,
+ *          \ref LORA_MAC_STATUS_OK,
  */
-LoRaMacStatus_t LoRaMacStart( void );
+LoRa_MacStatus_t LoRa_MacStart( void );
 
 /*!
  * \brief   Stops LoRaMAC layer
  *
- * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
+ * \retval  LoRa_MacStatus_t Status of the operation. Possible returns are:
  *          returns are:
- *          \ref LORAMAC_STATUS_OK,
+ *          \ref LORA_MAC_STATUS_OK,
  */
-LoRaMacStatus_t LoRaMacStop( void );
+LoRa_MacStatus_t LoRa_MacStop( void );
 
 /*!
  * \brief Returns a value indicating if the MAC layer is busy or not.
  * 
  * \retval isBusy Mac layer is busy.
  */
-bool LoRaMacIsBusy( void );
+bool LoRa_MacIsBusy( void );
 
 /*!
- * Processes the LoRaMac events.
+ * Processes the LoRa_Mac events.
  *
  * \remark This function must be called in the main loop.
  */
-void LoRaMacProcess( void );
+void LoRa_MacProcess( void );
 
 /*!
  * \brief   Queries the LoRaMAC if it is possible to send the next frame with
@@ -2469,25 +2468,25 @@ void LoRaMacProcess( void );
  *
  * \param   [IN] size - Size of application data payload to be send next
  *
- * \param   [OUT] txInfo - The structure \ref LoRaMacTxInfo_t contains
+ * \param   [OUT] txInfo - The structure \ref LoRa_MacTxInfo_t contains
  *                         information about the actual maximum payload possible
  *                         ( according to the configured datarate or the next
  *                         datarate according to ADR ), and the maximum frame
  *                         size, taking the scheduled MAC commands into account.
  *
- * \retval  LoRaMacStatus_t Status of the operation. When the parameters are
- *          not valid, the function returns \ref LORAMAC_STATUS_PARAMETER_INVALID.
+ * \retval  LoRa_MacStatus_t Status of the operation. When the parameters are
+ *          not valid, the function returns \ref LORA_MAC_STATUS_PARAMETER_INVALID.
  *          In case of a length error caused by the application data payload in combination
- *          with the MAC commands, the function returns \ref LORAMAC_STATUS_LENGTH_ERROR.
+ *          with the MAC commands, the function returns \ref LORA_MAC_STATUS_LENGTH_ERROR.
  *          In this case its recommended to send a frame without application data to flush
  *          the MAC commands. Otherwise the LoRaMAC will prioritize the MAC commands and
  *          if needed it will skip the application data. Please note that if MAC commands do
  *          not fit at all into the payload size on the related datarate, the LoRaMAC will
  *          automatically clip the MAC commands.
  *          In case the query is valid, and the LoRaMAC is able to send the frame,
- *          the function returns \ref LORAMAC_STATUS_OK.
+ *          the function returns \ref LORA_MAC_STATUS_OK.
  */
-LoRaMacStatus_t LoRaMacQueryTxPossible( uint8_t size, LoRaMacTxInfo_t* txInfo );
+LoRa_MacStatus_t LoRa_MacQueryTxPossible( uint8_t size, LoRa_MacTxInfo_t* txInfo );
 
 /*!
  * \brief   LoRaMAC channel add service
@@ -2500,12 +2499,12 @@ LoRaMacStatus_t LoRaMacQueryTxPossible( uint8_t size, LoRaMacTxInfo_t* txInfo );
  *
  * \param   [IN] params - Channel parameters to set.
  *
- * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
- *          \ref LORAMAC_STATUS_OK,
- *          \ref LORAMAC_STATUS_BUSY,
- *          \ref LORAMAC_STATUS_PARAMETER_INVALID.
+ * \retval  LoRa_MacStatus_t Status of the operation. Possible returns are:
+ *          \ref LORA_MAC_STATUS_OK,
+ *          \ref LORA_MAC_STATUS_BUSY,
+ *          \ref LORA_MAC_STATUS_PARAMETER_INVALID.
  */
-LoRaMacStatus_t LoRaMacChannelAdd( uint8_t id, ChannelParams_t params );
+LoRa_MacStatus_t LoRa_MacChannelAdd( uint8_t id, ChannelParams_t params );
 
 /*!
  * \brief   LoRaMAC channel remove service
@@ -2514,12 +2513,12 @@ LoRaMacStatus_t LoRaMacChannelAdd( uint8_t id, ChannelParams_t params );
  *
  * \param   [IN] id - Id of the channel.
  *
- * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
- *          \ref LORAMAC_STATUS_OK,
- *          \ref LORAMAC_STATUS_BUSY,
- *          \ref LORAMAC_STATUS_PARAMETER_INVALID.
+ * \retval  LoRa_MacStatus_t Status of the operation. Possible returns are:
+ *          \ref LORA_MAC_STATUS_OK,
+ *          \ref LORA_MAC_STATUS_BUSY,
+ *          \ref LORA_MAC_STATUS_PARAMETER_INVALID.
  */
-LoRaMacStatus_t LoRaMacChannelRemove( uint8_t id );
+LoRa_MacStatus_t LoRa_MacChannelRemove( uint8_t id );
 
 /*!
  * \brief   LoRaMAC multicast channel setup service
@@ -2528,13 +2527,13 @@ LoRaMacStatus_t LoRaMacChannelRemove( uint8_t id );
  *
  * \param   [IN] channel - Multicast channel to set.
  *
- * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
- *          \ref LORAMAC_STATUS_OK,
- *          \ref LORAMAC_STATUS_BUSY,
- *          \ref LORAMAC_STATUS_PARAMETER_INVALID,
- *          \ref LORAMAC_STATUS_MC_GROUP_UNDEFINED.
+ * \retval  LoRa_MacStatus_t Status of the operation. Possible returns are:
+ *          \ref LORA_MAC_STATUS_OK,
+ *          \ref LORA_MAC_STATUS_BUSY,
+ *          \ref LORA_MAC_STATUS_PARAMETER_INVALID,
+ *          \ref LORA_MAC_STATUS_MC_GROUP_UNDEFINED.
  */
-LoRaMacStatus_t LoRaMacMcChannelSetup( McChannelParams_t *channel );
+LoRa_MacStatus_t LoRa_MacMcChannelSetup( McChannelParams_t *channel );
 
 /*!
  * \brief   LoRaMAC multicast channel removal service
@@ -2543,12 +2542,12 @@ LoRaMacStatus_t LoRaMacMcChannelSetup( McChannelParams_t *channel );
  *
  * \param   [IN] groupID - Multicast channel ID to be removed/disabled
  *
- * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
- *          \ref LORAMAC_STATUS_OK,
- *          \ref LORAMAC_STATUS_BUSY,
- *          \ref LORAMAC_STATUS_MC_GROUP_UNDEFINED.
+ * \retval  LoRa_MacStatus_t Status of the operation. Possible returns are:
+ *          \ref LORA_MAC_STATUS_OK,
+ *          \ref LORA_MAC_STATUS_BUSY,
+ *          \ref LORA_MAC_STATUS_MC_GROUP_UNDEFINED.
  */
-LoRaMacStatus_t LoRaMacMcChannelDelete( AddressIdentifier_t groupID );
+LoRa_MacStatus_t LoRa_MacMcChannelDelete( AddressIdentifier_t groupID );
 
 /*!
  * \brief   LoRaMAC multicast channel get groupId from MC address.
@@ -2558,7 +2557,7 @@ LoRaMacStatus_t LoRaMacMcChannelDelete( AddressIdentifier_t groupID );
  * \retval  groupID           Multicast channel ID associated to the address.
  *                            Returns 0xFF if the address isn't found.
  */
-uint8_t LoRaMacMcChannelGetGroupId( uint32_t mcAddress );
+uint8_t LoRa_MacMcChannelGetGroupId( uint32_t mcAddress );
 
 /*!
  * \brief   LoRaMAC multicast channel Rx parameters setup service
@@ -2569,18 +2568,18 @@ uint8_t LoRaMacMcChannelGetGroupId( uint32_t mcAddress );
  * \param   [IN]  rxParams - Reception parameters
  * \param   [OUT] status   - Status mask [UNDEF_ID | FREQ_ERR | DR_ERR | GROUP_ID]
  *
- * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
- *          \ref LORAMAC_STATUS_OK,
- *          \ref LORAMAC_STATUS_BUSY,
- *          \ref LORAMAC_STATUS_PARAMETER_INVALID,
- *          \ref LORAMAC_STATUS_MC_GROUP_UNDEFINED.
+ * \retval  LoRa_MacStatus_t Status of the operation. Possible returns are:
+ *          \ref LORA_MAC_STATUS_OK,
+ *          \ref LORA_MAC_STATUS_BUSY,
+ *          \ref LORA_MAC_STATUS_PARAMETER_INVALID,
+ *          \ref LORA_MAC_STATUS_MC_GROUP_UNDEFINED.
  */
-LoRaMacStatus_t LoRaMacMcChannelSetupRxParams( AddressIdentifier_t groupID, McRxParams_t *rxParams, uint8_t *status );
+LoRa_MacStatus_t LoRa_MacMcChannelSetupRxParams( AddressIdentifier_t groupID, McRxParams_t *rxParams, uint8_t *status );
 
 /*!
  * \brief   LoRaMAC MIB-Get
  *
- * \details The mac information base service to get attributes of the LoRaMac
+ * \details The mac information base service to get attributes of the LoRa_Mac
  *          layer.
  *
  *          The following code-snippet shows how to use the API to get the
@@ -2590,7 +2589,7 @@ LoRaMacStatus_t LoRaMacMcChannelSetupRxParams( AddressIdentifier_t groupID, McRx
  * MibRequestConfirm_t mibReq;
  * mibReq.Type = MIB_ADR;
  *
- * if( LoRaMacMibGetRequestConfirm( &mibReq ) == LORAMAC_STATUS_OK )
+ * if( LoRa_MacMibGetRequestConfirm( &mibReq ) == LORA_MAC_STATUS_OK )
  * {
  *   // LoRaMAC updated the parameter mibParam.AdrEnable
  * }
@@ -2598,17 +2597,17 @@ LoRaMacStatus_t LoRaMacMcChannelSetupRxParams( AddressIdentifier_t groupID, McRx
  *
  * \param   [IN] mibRequest - MIB-GET-Request to perform. Refer to \ref MibRequestConfirm_t.
  *
- * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
- *          \ref LORAMAC_STATUS_OK,
- *          \ref LORAMAC_STATUS_SERVICE_UNKNOWN,
- *          \ref LORAMAC_STATUS_PARAMETER_INVALID.
+ * \retval  LoRa_MacStatus_t Status of the operation. Possible returns are:
+ *          \ref LORA_MAC_STATUS_OK,
+ *          \ref LORA_MAC_STATUS_SERVICE_UNKNOWN,
+ *          \ref LORA_MAC_STATUS_PARAMETER_INVALID.
  */
-LoRaMacStatus_t LoRaMacMibGetRequestConfirm( MibRequestConfirm_t* mibGet );
+LoRa_MacStatus_t LoRa_MacMibGetRequestConfirm( MibRequestConfirm_t* mibGet );
 
 /*!
  * \brief   LoRaMAC MIB-Set
  *
- * \details The mac information base service to set attributes of the LoRaMac
+ * \details The mac information base service to set attributes of the LoRa_Mac
  *          layer.
  *
  *          The following code-snippet shows how to use the API to set the
@@ -2620,7 +2619,7 @@ LoRaMacStatus_t LoRaMacMibGetRequestConfirm( MibRequestConfirm_t* mibGet );
  * mibReq.Type = MIB_ADR;
  * mibReq.Param.AdrEnable = true;
  *
- * if( LoRaMacMibGetRequestConfirm( &mibReq ) == LORAMAC_STATUS_OK )
+ * if( LoRa_MacMibGetRequestConfirm( &mibReq ) == LORA_MAC_STATUS_OK )
  * {
  *   // LoRaMAC updated the parameter
  * }
@@ -2628,13 +2627,13 @@ LoRaMacStatus_t LoRaMacMibGetRequestConfirm( MibRequestConfirm_t* mibGet );
  *
  * \param   [IN] mibRequest - MIB-SET-Request to perform. Refer to \ref MibRequestConfirm_t.
  *
- * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
- *          \ref LORAMAC_STATUS_OK,
- *          \ref LORAMAC_STATUS_BUSY,
- *          \ref LORAMAC_STATUS_SERVICE_UNKNOWN,
- *          \ref LORAMAC_STATUS_PARAMETER_INVALID.
+ * \retval  LoRa_MacStatus_t Status of the operation. Possible returns are:
+ *          \ref LORA_MAC_STATUS_OK,
+ *          \ref LORA_MAC_STATUS_BUSY,
+ *          \ref LORA_MAC_STATUS_SERVICE_UNKNOWN,
+ *          \ref LORA_MAC_STATUS_PARAMETER_INVALID.
  */
-LoRaMacStatus_t LoRaMacMibSetRequestConfirm( MibRequestConfirm_t* mibSet );
+LoRa_MacStatus_t LoRa_MacMibSetRequestConfirm( MibRequestConfirm_t* mibSet );
 
 /*!
  * \brief   LoRaMAC MLME-Request
@@ -2651,7 +2650,7 @@ LoRaMacStatus_t LoRaMacMibSetRequestConfirm( MibRequestConfirm_t* mibSet );
  * mlmeReq.Type = MLME_JOIN;
  * mlmeReq.Req.Join.Datarate = LORAWAN_DEFAULT_DATARATE;
  *
- * if( LoRaMacMlmeRequest( &mlmeReq ) == LORAMAC_STATUS_OK )
+ * if( LoRa_MacMlmeRequest( &mlmeReq ) == LORA_MAC_STATUS_OK )
  * {
  *   // Service started successfully. Waiting for the Mlme-Confirm event
  * }
@@ -2659,15 +2658,15 @@ LoRaMacStatus_t LoRaMacMibSetRequestConfirm( MibRequestConfirm_t* mibSet );
  *
  * \param   [IN] mlmeRequest - MLME-Request to perform. Refer to \ref MlmeReq_t.
  *
- * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
- *          \ref LORAMAC_STATUS_OK,
- *          \ref LORAMAC_STATUS_BUSY,
- *          \ref LORAMAC_STATUS_SERVICE_UNKNOWN,
- *          \ref LORAMAC_STATUS_PARAMETER_INVALID,
- *          \ref LORAMAC_STATUS_NO_NETWORK_JOINED,
- *          \ref LORAMAC_STATUS_LENGTH_ERROR,
+ * \retval  LoRa_MacStatus_t Status of the operation. Possible returns are:
+ *          \ref LORA_MAC_STATUS_OK,
+ *          \ref LORA_MAC_STATUS_BUSY,
+ *          \ref LORA_MAC_STATUS_SERVICE_UNKNOWN,
+ *          \ref LORA_MAC_STATUS_PARAMETER_INVALID,
+ *          \ref LORA_MAC_STATUS_NO_NETWORK_JOINED,
+ *          \ref LORA_MAC_STATUS_LENGTH_ERROR,
  */
-LoRaMacStatus_t LoRaMacMlmeRequest( MlmeReq_t* mlmeRequest );
+LoRa_MacStatus_t LoRa_MacMlmeRequest( MlmeReq_t* mlmeRequest );
 
 /*!
  * \brief   LoRaMAC MCPS-Request
@@ -2685,7 +2684,7 @@ LoRaMacStatus_t LoRaMacMlmeRequest( MlmeReq_t* mlmeRequest );
  * mcpsReq.Req.Unconfirmed.fBuffer = myBuffer;
  * mcpsReq.Req.Unconfirmed.fBufferSize = sizeof( myBuffer );
  *
- * if( LoRaMacMcpsRequest( &mcpsReq ) == LORAMAC_STATUS_OK )
+ * if( LoRa_MacMcpsRequest( &mcpsReq ) == LORA_MAC_STATUS_OK )
  * {
  *   // Service started successfully. Waiting for the MCPS-Confirm event
  * }
@@ -2693,26 +2692,26 @@ LoRaMacStatus_t LoRaMacMlmeRequest( MlmeReq_t* mlmeRequest );
  *
  * \param   [IN] mcpsRequest - MCPS-Request to perform. Refer to \ref McpsReq_t.
  *
- * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
- *          \ref LORAMAC_STATUS_OK,
- *          \ref LORAMAC_STATUS_BUSY,
- *          \ref LORAMAC_STATUS_SERVICE_UNKNOWN,
- *          \ref LORAMAC_STATUS_PARAMETER_INVALID,
- *          \ref LORAMAC_STATUS_NO_NETWORK_JOINED,
- *          \ref LORAMAC_STATUS_LENGTH_ERROR,
+ * \retval  LoRa_MacStatus_t Status of the operation. Possible returns are:
+ *          \ref LORA_MAC_STATUS_OK,
+ *          \ref LORA_MAC_STATUS_BUSY,
+ *          \ref LORA_MAC_STATUS_SERVICE_UNKNOWN,
+ *          \ref LORA_MAC_STATUS_PARAMETER_INVALID,
+ *          \ref LORA_MAC_STATUS_NO_NETWORK_JOINED,
+ *          \ref LORA_MAC_STATUS_LENGTH_ERROR,
  */
-LoRaMacStatus_t LoRaMacMcpsRequest( McpsReq_t* mcpsRequest );
+LoRa_MacStatus_t LoRa_MacMcpsRequest( McpsReq_t* mcpsRequest );
 
 /*!
- * Automatically add the Region.h file at the end of LoRaMac.h file.
- * This is required because Region.h uses definitions from LoRaMac.h
+ * Automatically add the Region.h file at the end of LoRa_Mac.h file.
+ * This is required because Region.h uses definitions from LoRa_Mac.h
  */
 #include "region/Region.h"
 
-/*! \} defgroup LORAMAC */
+/*! \} defgroup LORA_MAC */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __LORAMAC_H__
+#endif // __LORA_MAC_H__

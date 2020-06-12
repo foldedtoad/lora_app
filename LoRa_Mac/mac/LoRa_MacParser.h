@@ -1,5 +1,5 @@
 /*!
- * \file      LoRaMacParser.h
+ * \file      LoRa_MacParser.h
  *
  * \brief     LoRa MAC layer message parser functionality implementation
  *
@@ -30,12 +30,12 @@
  *
  * \author    Johannes Bruder ( STACKFORCE )
  *
- * addtogroup LORAMAC
+ * addtogroup LORA_MAC
  * \{
  *
  */
-#ifndef __LORAMAC_PARSER_H__
-#define __LORAMAC_PARSER_H__
+#ifndef __LORA_MAC_PARSER_H__
+#define __LORA_MAC_PARSER_H__
 
 #ifdef __cplusplus
 extern "C"
@@ -43,30 +43,30 @@ extern "C"
 #endif
 
 #include <stdint.h>
-#include "LoRaMacMessageTypes.h"
+#include "LoRa_MacMessageTypes.h"
 
 /*!
- * LoRaMac Parser Status
+ * LoRa_Mac Parser Status
  */
-typedef enum eLoRaMacParserStatus
+typedef enum eLoRa_MacParserStatus
 {
     /*!
      * No error occurred
      */
-    LORAMAC_PARSER_SUCCESS = 0,
+    LORA_MAC_PARSER_SUCCESS = 0,
     /*!
      * Failure during parsing occurred
      */
-    LORAMAC_PARSER_FAIL,
+    LORA_MAC_PARSER_FAIL,
     /*!
      * Null pointer exception
      */
-    LORAMAC_PARSER_ERROR_NPE,
+    LORA_MAC_PARSER_ERROR_NPE,
     /*!
      * Undefined Error occurred
      */
-    LORAMAC_PARSER_ERROR,
-}LoRaMacParserStatus_t;
+    LORA_MAC_PARSER_ERROR,
+}LoRa_MacParserStatus_t;
 
 
 /*!
@@ -75,7 +75,7 @@ typedef enum eLoRaMacParserStatus
  * \param[IN/OUT] macMsg       - Join-accept message object
  * \retval                     - Status of the operation
  */
-LoRaMacParserStatus_t LoRaMacParserJoinAccept( LoRaMacMessageJoinAccept_t *macMsg );
+LoRa_MacParserStatus_t LoRa_MacParserJoinAccept( LoRa_MacMessageJoinAccept_t *macMsg );
 
 /*!
  * Parse a serialized data message and fills the structured object.
@@ -83,13 +83,13 @@ LoRaMacParserStatus_t LoRaMacParserJoinAccept( LoRaMacMessageJoinAccept_t *macMs
  * \param[IN/OUT] macMsg       - Data message object
  * \retval                     - Status of the operation
  */
-LoRaMacParserStatus_t LoRaMacParserData( LoRaMacMessageData_t *macMsg );
+LoRa_MacParserStatus_t LoRa_MacParserData( LoRa_MacMessageData_t *macMsg );
 
-/*! \} addtogroup LORAMAC */
+/*! \} addtogroup LORA_MAC */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __LORAMAC_PARSER_H__
+#endif // __LORA_MAC_PARSER_H__
 

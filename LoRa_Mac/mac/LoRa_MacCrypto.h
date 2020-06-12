@@ -1,5 +1,5 @@
 /*!
- * \file      LoRaMacCrypto.h
+ * \file      LoRa_MacCrypto.h
  *
  * \brief     LoRa MAC layer cryptographic functionality implementation
  *
@@ -30,12 +30,12 @@
  *
  * \author    Johannes Bruder ( STACKFORCE )
  *
- * addtogroup LORAMAC
+ * addtogroup LORA_MAC
  * \{
  *
  */
-#ifndef __LORAMAC_CRYPTO_H__
-#define __LORAMAC_CRYPTO_H__
+#ifndef __LORA_MAC_CRYPTO_H__
+#define __LORA_MAC_CRYPTO_H__
 
 #ifdef __cplusplus
 extern "C"
@@ -46,8 +46,8 @@ extern "C"
 #include <stdint.h>
 #include <stdbool.h>
 #include "utilities.h"
-#include "LoRaMacTypes.h"
-#include "LoRaMacMessageTypes.h"
+#include "LoRa_MacTypes.h"
+#include "LoRa_MacMessageTypes.h"
 
 /*
  * Initial value of the frame counters
@@ -55,109 +55,109 @@ extern "C"
 #define FCNT_DOWN_INITAL_VALUE          0xFFFFFFFF
 
 /*!
- * LoRaMac Cryto Status
+ * LoRa_Mac Cryto Status
  */
-typedef enum eLoRaMacCryptoStatus
+typedef enum eLoRa_MacCryptoStatus
 {
     /*!
      * No error occurred
      */
-    LORAMAC_CRYPTO_SUCCESS = 0,
+    LORA_MAC_CRYPTO_SUCCESS = 0,
     /*!
      * MIC does not match
      */
-    LORAMAC_CRYPTO_FAIL_MIC,
+    LORA_MAC_CRYPTO_FAIL_MIC,
     /*!
      * Address does not match
      */
-    LORAMAC_CRYPTO_FAIL_ADDRESS,
+    LORA_MAC_CRYPTO_FAIL_ADDRESS,
     /*!
      * JoinNonce was not greater than previous one.
      */
-    LORAMAC_CRYPTO_FAIL_JOIN_NONCE,
+    LORA_MAC_CRYPTO_FAIL_JOIN_NONCE,
     /*!
      * RJcount0 reached 2^16-1
      */
-    LORAMAC_CRYPTO_FAIL_RJCOUNT0_OVERFLOW,
+    LORA_MAC_CRYPTO_FAIL_RJCOUNT0_OVERFLOW,
     /*!
      * FCNT_ID is not supported
      */
-    LORAMAC_CRYPTO_FAIL_FCNT_ID,
+    LORA_MAC_CRYPTO_FAIL_FCNT_ID,
     /*!
      * FCntUp/Down check failed (new FCnt is smaller than previous one)
      */
-    LORAMAC_CRYPTO_FAIL_FCNT_SMALLER,
+    LORA_MAC_CRYPTO_FAIL_FCNT_SMALLER,
     /*!
      * FCntUp/Down check failed (duplicated)
      */
-    LORAMAC_CRYPTO_FAIL_FCNT_DUPLICATED,
+    LORA_MAC_CRYPTO_FAIL_FCNT_DUPLICATED,
     /*!
      * MAX_GAP_FCNT check failed
      */
-    LORAMAC_CRYPTO_FAIL_MAX_GAP_FCNT,
+    LORA_MAC_CRYPTO_FAIL_MAX_GAP_FCNT,
     /*!
      * Not allowed parameter value
      */
-    LORAMAC_CRYPTO_FAIL_PARAM,
+    LORA_MAC_CRYPTO_FAIL_PARAM,
     /*!
      * Null pointer exception
      */
-    LORAMAC_CRYPTO_ERROR_NPE,
+    LORA_MAC_CRYPTO_ERROR_NPE,
     /*!
      * Invalid key identifier exception
      */
-    LORAMAC_CRYPTO_ERROR_INVALID_KEY_ID,
+    LORA_MAC_CRYPTO_ERROR_INVALID_KEY_ID,
     /*!
      * Invalid address identifier exception
      */
-    LORAMAC_CRYPTO_ERROR_INVALID_ADDR_ID,
+    LORA_MAC_CRYPTO_ERROR_INVALID_ADDR_ID,
     /*!
      * Invalid LoRaWAN specification version
      */
-    LORAMAC_CRYPTO_ERROR_INVALID_VERSION,
+    LORA_MAC_CRYPTO_ERROR_INVALID_VERSION,
     /*!
      * Incompatible buffer size
      */
-    LORAMAC_CRYPTO_ERROR_BUF_SIZE,
+    LORA_MAC_CRYPTO_ERROR_BUF_SIZE,
     /*!
      * The secure element reports an error
      */
-    LORAMAC_CRYPTO_ERROR_SECURE_ELEMENT_FUNC,
+    LORA_MAC_CRYPTO_ERROR_SECURE_ELEMENT_FUNC,
     /*!
      * Error from parser reported
      */
-    LORAMAC_CRYPTO_ERROR_PARSER,
+    LORA_MAC_CRYPTO_ERROR_PARSER,
     /*!
      * Error from serializer reported
      */
-    LORAMAC_CRYPTO_ERROR_SERIALIZER,
+    LORA_MAC_CRYPTO_ERROR_SERIALIZER,
     /*!
      * RJcount1 reached 2^16-1 which should never happen
      */
-    LORAMAC_CRYPTO_ERROR_RJCOUNT1_OVERFLOW,
+    LORA_MAC_CRYPTO_ERROR_RJCOUNT1_OVERFLOW,
     /*!
      * Undefined Error occurred
      */
-    LORAMAC_CRYPTO_ERROR,
-}LoRaMacCryptoStatus_t;
+    LORA_MAC_CRYPTO_ERROR,
+}LoRa_MacCryptoStatus_t;
 
 /*!
- * Signature of callback function to be called by the LoRaMac Crypto module when the
+ * Signature of callback function to be called by the LoRa_Mac Crypto module when the
  * non-volatile context have to be stored. It is also possible to save the entire
  * crypto module context.
  *
  */
-typedef void ( *LoRaMacCryptoNvmEvent )( void );
+typedef void ( *LoRa_MacCryptoNvmEvent )( void );
 
 /*!
- * Initialization of LoRaMac Crypto module
+ * Initialization of LoRa_Mac Crypto module
  * It sets initial values of volatile variables and assigns the non-volatile context.
  *
  * \param[IN]     cryptoNvmCtxChanged - Callback function which will be called  when the
  *                                      non-volatile context have to be stored.
  * \retval                            - Status of the operation
  */
-LoRaMacCryptoStatus_t LoRaMacCryptoInit( LoRaMacCryptoNvmEvent cryptoNvmCtxChanged );
+LoRa_MacCryptoStatus_t LoRa_MacCryptoInit( LoRa_MacCryptoNvmEvent cryptoNvmCtxChanged );
 
 /*!
  * Sets the LoRaWAN specification version to be used.
@@ -168,7 +168,7 @@ LoRaMacCryptoStatus_t LoRaMacCryptoInit( LoRaMacCryptoNvmEvent cryptoNvmCtxChang
  *
  * \retval                            - Status of the operation
  */
-LoRaMacCryptoStatus_t LoRaMacCryptoSetLrWanVersion( Version_t version );
+LoRa_MacCryptoStatus_t LoRa_MacCryptoSetLrWanVersion( Version_t version );
 
 /*!
  * Restores the internal nvm context from passed pointer.
@@ -176,7 +176,7 @@ LoRaMacCryptoStatus_t LoRaMacCryptoSetLrWanVersion( Version_t version );
  * \param[IN]     cryptoNmvCtx     - Pointer to non-volatile crypto module context to be restored.
  * \retval                         - Status of the operation
  */
-LoRaMacCryptoStatus_t LoRaMacCryptoRestoreNvmCtx( void* cryptoNvmCtx );
+LoRa_MacCryptoStatus_t LoRa_MacCryptoRestoreNvmCtx( void* cryptoNvmCtx );
 
 /*!
  * Returns a pointer to the internal non-volatile context.
@@ -184,7 +184,7 @@ LoRaMacCryptoStatus_t LoRaMacCryptoRestoreNvmCtx( void* cryptoNvmCtx );
  * \param[IN]     cryptoNvmCtxSize - Size of the module non-volatile context
  * \retval                         - Points to a structure where the module store its non-volatile context
  */
-void* LoRaMacCryptoGetNvmCtx( size_t* cryptoNvmCtxSize );
+void* LoRa_MacCryptoGetNvmCtx( size_t* cryptoNvmCtxSize );
 
 /*!
  * Returns updated fCntID downlink counter value.
@@ -195,7 +195,7 @@ void* LoRaMacCryptoGetNvmCtx( size_t* cryptoNvmCtxSize );
  * \param[OUT]    currentDown    - Current downlink counter value
  * \retval                       - Status of the operation
  */
-LoRaMacCryptoStatus_t LoRaMacCryptoGetFCntDown( FCntIdentifier_t fCntID, uint16_t maxFCntGap, uint32_t frameFcnt, uint32_t* currentDown );
+LoRa_MacCryptoStatus_t LoRa_MacCryptoGetFCntDown( FCntIdentifier_t fCntID, uint16_t maxFCntGap, uint32_t frameFcnt, uint32_t* currentDown );
 
 /*!
  * Returns updated fCntUp uplink counter value.
@@ -203,7 +203,7 @@ LoRaMacCryptoStatus_t LoRaMacCryptoGetFCntDown( FCntIdentifier_t fCntID, uint16_
  * \param[IN]     currentUp      - Uplink counter value
  * \retval                       - Status of the operation
  */
-LoRaMacCryptoStatus_t LoRaMacCryptoGetFCntUp( uint32_t* currentUp );
+LoRa_MacCryptoStatus_t LoRa_MacCryptoGetFCntUp( uint32_t* currentUp );
 
 /*!
  * Provides multicast context.
@@ -212,7 +212,7 @@ LoRaMacCryptoStatus_t LoRaMacCryptoGetFCntUp( uint32_t* currentUp );
  *
  * \retval                      - Status of the operation
  */
-LoRaMacCryptoStatus_t LoRaMacCryptoSetMulticastReference( MulticastCtx_t* multicastList );
+LoRa_MacCryptoStatus_t LoRa_MacCryptoSetMulticastReference( MulticastCtx_t* multicastList );
 
 /*!
  * Sets a key
@@ -221,7 +221,7 @@ LoRaMacCryptoStatus_t LoRaMacCryptoSetMulticastReference( MulticastCtx_t* multic
  * \param[IN]     key            - Key value (16 byte), if its a multicast key it must be encrypted with McKEKey
  * \retval                       - Status of the operation
  */
-LoRaMacCryptoStatus_t LoRaMacCryptoSetKey( KeyIdentifier_t keyID, uint8_t* key );
+LoRa_MacCryptoStatus_t LoRa_MacCryptoSetKey( KeyIdentifier_t keyID, uint8_t* key );
 
 /*!
  * Prepares the join-request message.
@@ -230,7 +230,7 @@ LoRaMacCryptoStatus_t LoRaMacCryptoSetKey( KeyIdentifier_t keyID, uint8_t* key )
  * \param[IN/OUT] macMsg         - Join-request message object
  * \retval                       - Status of the operation
  */
-LoRaMacCryptoStatus_t LoRaMacCryptoPrepareJoinRequest( LoRaMacMessageJoinRequest_t* macMsg );
+LoRa_MacCryptoStatus_t LoRa_MacCryptoPrepareJoinRequest( LoRa_MacMessageJoinRequest_t* macMsg );
 
 /*!
  * Prepares a rejoin-request type 1 message.
@@ -239,7 +239,7 @@ LoRaMacCryptoStatus_t LoRaMacCryptoPrepareJoinRequest( LoRaMacMessageJoinRequest
  * \param[IN/OUT] macMsg         - Rejoin message object
  * \retval                       - Status of the operation
  */
-LoRaMacCryptoStatus_t LoRaMacCryptoPrepareReJoinType1( LoRaMacMessageReJoinType1_t* macMsg );
+LoRa_MacCryptoStatus_t LoRa_MacCryptoPrepareReJoinType1( LoRa_MacMessageReJoinType1_t* macMsg );
 
 /*!
  * Prepares a rejoin-request type 0 or 2 message.
@@ -248,7 +248,7 @@ LoRaMacCryptoStatus_t LoRaMacCryptoPrepareReJoinType1( LoRaMacMessageReJoinType1
  * \param[IN/OUT] macMsg         - Rejoin message object
  * \retval                       - Status of the operation
  */
-LoRaMacCryptoStatus_t LoRaMacCryptoPrepareReJoinType0or2( LoRaMacMessageReJoinType0or2_t* macMsg );
+LoRa_MacCryptoStatus_t LoRa_MacCryptoPrepareReJoinType0or2( LoRa_MacMessageReJoinType0or2_t* macMsg );
 
 /*!
  * Handles the join-accept message.
@@ -259,7 +259,7 @@ LoRaMacCryptoStatus_t LoRaMacCryptoPrepareReJoinType0or2( LoRaMacMessageReJoinTy
  * \param[IN/OUT] macMsg         - Join-accept message object
  * \retval                       - Status of the operation
  */
-LoRaMacCryptoStatus_t LoRaMacCryptoHandleJoinAccept( JoinReqIdentifier_t joinReqType, uint8_t* joinEUI, LoRaMacMessageJoinAccept_t* macMsg );
+LoRa_MacCryptoStatus_t LoRa_MacCryptoHandleJoinAccept( JoinReqIdentifier_t joinReqType, uint8_t* joinEUI, LoRa_MacMessageJoinAccept_t* macMsg );
 
 /*!
  * Secures a message (encryption + integrity).
@@ -270,7 +270,7 @@ LoRaMacCryptoStatus_t LoRaMacCryptoHandleJoinAccept( JoinReqIdentifier_t joinReq
  * \param[IN/OUT] macMsg          - Data message object
  * \retval                        - Status of the operation
  */
-LoRaMacCryptoStatus_t LoRaMacCryptoSecureMessage( uint32_t fCntUp, uint8_t txDr, uint8_t txCh, LoRaMacMessageData_t* macMsg );
+LoRa_MacCryptoStatus_t LoRa_MacCryptoSecureMessage( uint32_t fCntUp, uint8_t txDr, uint8_t txCh, LoRa_MacMessageData_t* macMsg );
 
 /*!
  * Unsecures a message (decryption + integrity verification).
@@ -282,7 +282,7 @@ LoRaMacCryptoStatus_t LoRaMacCryptoSecureMessage( uint32_t fCntUp, uint8_t txDr,
  * \param[IN/OUT] macMsg          - Data message object
  * \retval                        - Status of the operation
  */
-LoRaMacCryptoStatus_t LoRaMacCryptoUnsecureMessage( AddressIdentifier_t addrID, uint32_t address, FCntIdentifier_t fCntID, uint32_t fCntDown, LoRaMacMessageData_t* macMsg );
+LoRa_MacCryptoStatus_t LoRa_MacCryptoUnsecureMessage( AddressIdentifier_t addrID, uint32_t address, FCntIdentifier_t fCntID, uint32_t fCntDown, LoRa_MacMessageData_t* macMsg );
 
 /*!
  * Derives the McRootKey from the GenAppKey or AppKey.
@@ -296,7 +296,7 @@ LoRaMacCryptoStatus_t LoRaMacCryptoUnsecureMessage( AddressIdentifier_t addrID, 
  * \param[IN]     keyID           - Key identifier of the root key to use to perform the derivation ( GenAppKey or AppKey )
  * \retval                        - Status of the operation
  */
-LoRaMacCryptoStatus_t LoRaMacCryptoDeriveMcRootKey( KeyIdentifier_t keyID );
+LoRa_MacCryptoStatus_t LoRa_MacCryptoDeriveMcRootKey( KeyIdentifier_t keyID );
 
 /*!
  * Derives the McKEKey from the McRootKey.
@@ -306,7 +306,7 @@ LoRaMacCryptoStatus_t LoRaMacCryptoDeriveMcRootKey( KeyIdentifier_t keyID );
  * \param[IN]     keyID           - Key identifier of the root key to use to perform the derivation ( McRootKey )
  * \retval                        - Status of the operation
  */
-LoRaMacCryptoStatus_t LoRaMacCryptoDeriveMcKEKey( KeyIdentifier_t keyID );
+LoRa_MacCryptoStatus_t LoRa_MacCryptoDeriveMcKEKey( KeyIdentifier_t keyID );
 
 /*!
  * Derives a Multicast group key pair ( McAppSKey, McNwkSKey ) from McKey
@@ -318,12 +318,12 @@ LoRaMacCryptoStatus_t LoRaMacCryptoDeriveMcKEKey( KeyIdentifier_t keyID );
  * \param[IN]     mcAddr          - Multicast group address (4 bytes)
  * \retval                        - Status of the operation
  */
-LoRaMacCryptoStatus_t LoRaMacCryptoDeriveMcSessionKeyPair( AddressIdentifier_t addrID, uint32_t mcAddr );
+LoRa_MacCryptoStatus_t LoRa_MacCryptoDeriveMcSessionKeyPair( AddressIdentifier_t addrID, uint32_t mcAddr );
 
-/*! \} addtogroup LORAMAC */
+/*! \} addtogroup LORA_MAC */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __LORAMAC_CRYPTO_H__
+#endif // __LORA_MAC_CRYPTO_H__

@@ -1,5 +1,5 @@
 /*!
- * \file      LoRaMacCommands.h
+ * \file      LoRa_MacCommands.h
  *
  * \brief     LoRa MAC commands
  *
@@ -28,12 +28,12 @@
  *
  * \author    Johannes Bruder ( STACKFORCE )
  *
- * addtogroup LORAMAC
+ * addtogroup LORA_MAC
  * \{
  *
  */
-#ifndef __LORAMAC_COMMANDS_H__
-#define __LORAMAC_COMMANDS_H__
+#ifndef __LORA_MAC_COMMANDS_H__
+#define __LORA_MAC_COMMANDS_H__
 
 #ifdef __cplusplus
 extern "C"
@@ -42,13 +42,13 @@ extern "C"
 
 #include <stdint.h>
 #include <stddef.h>
-#include "LoRaMacTypes.h"
+#include "LoRa_MacTypes.h"
 
 
 /*
  * Number of MAC Command slots
  */
-#define LORAMAC_COMMADS_MAX_NUM_OF_PARAMS   2
+#define LORA_MAC_COMMADS_MAX_NUM_OF_PARAMS   2
 
 /*!
  * LoRaWAN MAC Command element
@@ -68,7 +68,7 @@ struct sMacCommand
     /*!
      * MAC command payload
      */
-    uint8_t Payload[LORAMAC_COMMADS_MAX_NUM_OF_PARAMS];
+    uint8_t Payload[LORA_MAC_COMMADS_MAX_NUM_OF_PARAMS];
     /*!
      * Size of MAC command payload
      */
@@ -80,51 +80,51 @@ struct sMacCommand
 };
 
 /*!
- * LoRaMac Commands Status
+ * LoRa_Mac Commands Status
  */
-typedef enum eLoRaMacCommandsStatus
+typedef enum eLoRa_MacCommandsStatus
 {
     /*!
      * No error occurred
      */
-    LORAMAC_COMMANDS_SUCCESS = 0,
+    LORA_MAC_COMMANDS_SUCCESS = 0,
     /*!
      * Null pointer exception
      */
-    LORAMAC_COMMANDS_ERROR_NPE,
+    LORA_MAC_COMMANDS_ERROR_NPE,
     /*!
      * There is no memory left to add a further MAC command
      */
-    LORAMAC_COMMANDS_ERROR_MEMORY,
+    LORA_MAC_COMMANDS_ERROR_MEMORY,
     /*!
      * MAC command not found.
      */
-    LORAMAC_COMMANDS_ERROR_CMD_NOT_FOUND,
+    LORA_MAC_COMMANDS_ERROR_CMD_NOT_FOUND,
     /*!
      * Unknown or corrupted command error occurred.
      */
-    LORAMAC_COMMANDS_ERROR_UNKNOWN_CMD,
+    LORA_MAC_COMMANDS_ERROR_UNKNOWN_CMD,
     /*!
      * Undefined Error occurred
      */
-    LORAMAC_COMMANDS_ERROR,
-}LoRaMacCommandStatus_t;
+    LORA_MAC_COMMANDS_ERROR,
+}LoRa_MacCommandStatus_t;
 
 /*!
  * Signature of callback function to be called by this module when the
  * non-volatile needs to be saved.
  */
-typedef void ( *LoRaMacCommandsNvmEvent )( void );
+typedef void ( *LoRa_MacCommandsNvmEvent )( void );
 
 /*!
- * \brief Initialization of LoRaMac MAC commands module
+ * \brief Initialization of LoRa_Mac MAC commands module
  *
  * \param[IN]    commandsNvmCtxChanged - Callback function which will be called when the
  *                                      non-volatile context needs to be saved.
  *
  * \retval                            - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsInit( LoRaMacCommandsNvmEvent commandsNvmCtxChanged );
+LoRa_MacCommandStatus_t LoRa_MacCommandsInit( LoRa_MacCommandsNvmEvent commandsNvmCtxChanged );
 
 /*!
  * Restores the internal non-volatile context from passed pointer.
@@ -133,7 +133,7 @@ LoRaMacCommandStatus_t LoRaMacCommandsInit( LoRaMacCommandsNvmEvent commandsNvmC
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsRestoreNvmCtx( void* commandsNvmCtx );
+LoRa_MacCommandStatus_t LoRa_MacCommandsRestoreNvmCtx( void* commandsNvmCtx );
 
 /*!
  * Returns a pointer to the internal non-volatile context.
@@ -142,7 +142,7 @@ LoRaMacCommandStatus_t LoRaMacCommandsRestoreNvmCtx( void* commandsNvmCtx );
  *
  * \retval                    - Points to a structure where the module store its non-volatile context
  */
-void* LoRaMacCommandsGetNvmCtx( size_t* commandsNvmCtxSize );
+void* LoRa_MacCommandsGetNvmCtx( size_t* commandsNvmCtxSize );
 
 /*!
  * \brief Adds a new MAC command to be sent.
@@ -153,7 +153,7 @@ void* LoRaMacCommandsGetNvmCtx( size_t* commandsNvmCtxSize );
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsAddCmd( uint8_t cid, uint8_t* payload, size_t payloadSize );
+LoRa_MacCommandStatus_t LoRa_MacCommandsAddCmd( uint8_t cid, uint8_t* payload, size_t payloadSize );
 
 /*!
  * \brief Remove a MAC command.
@@ -162,7 +162,7 @@ LoRaMacCommandStatus_t LoRaMacCommandsAddCmd( uint8_t cid, uint8_t* payload, siz
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsRemoveCmd( MacCommand_t* macCmd );
+LoRa_MacCommandStatus_t LoRa_MacCommandsRemoveCmd( MacCommand_t* macCmd );
 
 /*!
  * \brief Get the MAC command with corresponding CID.
@@ -172,21 +172,21 @@ LoRaMacCommandStatus_t LoRaMacCommandsRemoveCmd( MacCommand_t* macCmd );
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsGetCmd( uint8_t cid, MacCommand_t** macCmd );
+LoRa_MacCommandStatus_t LoRa_MacCommandsGetCmd( uint8_t cid, MacCommand_t** macCmd );
 
 /*!
  * \brief Remove all none sticky MAC commands.
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsRemoveNoneStickyCmds( void );
+LoRa_MacCommandStatus_t LoRa_MacCommandsRemoveNoneStickyCmds( void );
 
 /*!
  * \brief Remove all sticky answer MAC commands.
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsRemoveStickyAnsCmds( void );
+LoRa_MacCommandStatus_t LoRa_MacCommandsRemoveStickyAnsCmds( void );
 
 /*!
  * \brief Get size of all MAC commands serialized as buffer
@@ -195,7 +195,7 @@ LoRaMacCommandStatus_t LoRaMacCommandsRemoveStickyAnsCmds( void );
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsGetSizeSerializedCmds( size_t* size );
+LoRa_MacCommandStatus_t LoRa_MacCommandsGetSizeSerializedCmds( size_t* size );
 
 /*!
  * \brief Get as many as possible MAC commands serialized
@@ -206,7 +206,7 @@ LoRaMacCommandStatus_t LoRaMacCommandsGetSizeSerializedCmds( size_t* size );
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsSerializeCmds( size_t availableSize, size_t* effectiveSize,  uint8_t* buffer );
+LoRa_MacCommandStatus_t LoRa_MacCommandsSerializeCmds( size_t availableSize, size_t* effectiveSize,  uint8_t* buffer );
 
 /*!
  * \brief Determines if there are sticky MAC commands pending.
@@ -215,13 +215,13 @@ LoRaMacCommandStatus_t LoRaMacCommandsSerializeCmds( size_t availableSize, size_
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsStickyCmdsPending( bool* cmdsPending );
+LoRa_MacCommandStatus_t LoRa_MacCommandsStickyCmdsPending( bool* cmdsPending );
 
-/*! \} addtogroup LORAMAC */
+/*! \} addtogroup LORA_MAC */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __LORAMAC_COMMANDS_H__
+#endif // __LORA_MAC_COMMANDS_H__
 
