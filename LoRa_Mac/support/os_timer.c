@@ -1,5 +1,5 @@
 /*!
- * \file      timer.c
+ * \file      os_timer.c
  *
  * \brief     Timer objects and scheduling management implementation
  *

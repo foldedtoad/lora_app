@@ -992,6 +992,21 @@ static void BoardLowPowerHandler( void )
 #endif
 }
 
+#if 0  // FIXME 
+uint32_t Os_RtcMs2Tick( TimerTime_t milliseconds )
+{
+    return ( uint32_t )( milliseconds );
+}
+
+TimerTime_t Os_RtcTick2Ms( uint32_t tick )
+{
+    uint32_t seconds = tick >> 10;
+
+    tick = tick & 0x3FF;
+    return ( ( seconds * 1000 ) + ( ( tick * 1000 ) >> 10 ) );
+}
+#endif
+
 /*---------------------------------------------------------------------------*/
 /*  LoRa application entry point                                             */
 /*---------------------------------------------------------------------------*/

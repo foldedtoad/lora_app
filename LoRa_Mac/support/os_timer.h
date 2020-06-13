@@ -1,5 +1,5 @@
 /*!
- * \file      timer.h
+ * \file      os_timer.h
  *
  * \brief     Timer objects and scheduling management implementation
  *
@@ -20,8 +20,8 @@
  *
  * \author    Gregory Cristian ( Semtech )
  */
-#ifndef __TIMER_H__
-#define __TIMER_H__
+#ifndef __OS_TIMER_H__
+#define __OS_TIMER_H__
 
 #ifdef __cplusplus
 extern "C"
@@ -154,4 +154,4 @@ void Os_TimerProcess( void );
 }
 #endif
 
-#endif // __TIMER_H__
+#endif // __OS_TIMER_H__
