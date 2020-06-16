@@ -8,15 +8,15 @@
  &spi1 {
 #if 1
      status = "okay";
-     cs-gpios = <&gpioa 22 0>;
+     cs-gpios = <&gpiob 6 0>;
  #endif
 
      sx1276@0 {
          compatible = "semtech,sx1276";
          reg = <0>;
-         spi-max-frequency = <1000000>;
+         spi-max-frequency = <4000000>;
          label = "SX1276";
-         reset-gpios = <&gpioa 11 GPIO_ACTIVE_HIGH>;
-         dio-gpios   = <&gpioa 12 GPIO_ACTIVE_HIGH>;
+         reset-gpios = <&gpioc 7 GPIO_ACTIVE_HIGH>;
+         dio-gpios   = <&gpioa 3 GPIO_ACTIVE_HIGH>;
      };
  };
