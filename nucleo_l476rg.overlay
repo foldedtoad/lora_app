@@ -5,18 +5,20 @@
   */
 
 
- &spi1 {
-#if 1
-     status = "okay";
-     cs-gpios = <&gpiob 6 0>;
- #endif
+&spi1 {
 
-     sx1276@0 {
-         compatible = "semtech,sx1276";
-         reg = <0>;
-         spi-max-frequency = <4000000>;
-         label = "SX1276";
-         reset-gpios = <&gpioc 7 GPIO_ACTIVE_HIGH>;
-         dio-gpios   = <&gpioa 3 GPIO_ACTIVE_HIGH>;
-     };
- };
+    status = "okay";
+    cs-gpios = <&gpiob 6 0>;  // D10
+                              // D13  SPI-CLK
+                              // D12  SPI-MISO
+                              // D11  SPI-MOSI
+
+    sx1276@0 {
+        compatible = "semtech,sx1276";
+        reg = <0>;
+        spi-max-frequency = <4000000>;
+        label = "SX1276";
+        reset-gpios = <&gpioc 7 GPIO_ACTIVE_HIGH>;   // D9
+        dio-gpios   = <&gpioa 10 GPIO_ACTIVE_HIGH>;  // D2
+    };
+};
