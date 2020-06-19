@@ -5,11 +5,17 @@
   */
 
 
+/*
+ *  The Arduino-defined pins for SPI-CLK is D10 (PA5), but PA5 is tied to LED2 (LD2).
+ *  The docs directory has workaround details --
+ *      The pin D3 (PB3) is wired to the ICSP SPI-CLK pin on the LoRa shield.
+ *      The SV2 jumper is set to the right position, (2-1), on the LoRa shield.
+ */
 &spi1 {
 
     status = "okay";
-    cs-gpios = <&gpiob 6 0>;  // D10
-                              // D13  SPI-CLK
+    cs-gpios = <&gpiob 6 0>;  // D10  SPI-CS
+                              // D3   SPI-CLK
                               // D12  SPI-MISO
                               // D11  SPI-MOSI
 
