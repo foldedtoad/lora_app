@@ -10,6 +10,11 @@
  *  The docs directory has workaround details --
  *      The pin D3 (PB3) is wired to the ICSP SPI-CLK pin on the LoRa shield.
  *      The SV2 jumper is set to the right position, (2-1), on the LoRa shield.
+ *  See ./zephyr/drivers/boards/arm/nucleo_l476rg/pinmux.c for details.
+ *
+ *   The Dragino LoRa shield on a Nucleo-L476rg board must be provided with
+ *   a SPI CLK frequency of between 20MHz and 5MHz. "Bus Busy" errors if
+ *   SPI bus is operated at lower frequencies.
  */
 &spi1 {
 
@@ -22,9 +27,9 @@
     sx1276@0 {
         compatible = "semtech,sx1276";
         reg = <0>;
-        spi-max-frequency = <4000000>;
+        spi-max-frequency = <5000000>;    
         label = "SX1276";
-        reset-gpios = <&gpioc 7 GPIO_ACTIVE_HIGH>;   // D9
+        reset-gpios = <&gpioc 7 GPIO_ACTIVE_LOW>;    // D9
         dio-gpios   = <&gpioa 10 GPIO_ACTIVE_HIGH>;  // D2
     };
 };
